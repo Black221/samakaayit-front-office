@@ -1,20 +1,11 @@
 import { Route, Routes } from "react-router-dom"
 import Layout from "./Layout"
 
-import AdminPage from "./admin/Page";
-import UserPage from "./user/Page";
-import { useAuth } from "../hooks/useAuth";
 import { useMainState } from "../hooks/useMainState";
 import { useEffect } from "react";
 
 
-const CheckRole = (role: string) => {
-	return  role === 'admin' ? <AdminPage /> : <UserPage />
-}
-
 function App() {
-
-	const { getRole } = useAuth();
 
 	const {
         setScreenSize,
@@ -40,8 +31,7 @@ function App() {
 	return (<>
 		<Routes>
 			<Route path="/" element={<Layout />}>
-				<Route path="/" element={CheckRole(getRole())} />
-				<Route path="/*" element={CheckRole(getRole())} />
+				<Route path="/*" element={<div>test</div>} />
 			</Route>
 		</Routes>
 	</>)

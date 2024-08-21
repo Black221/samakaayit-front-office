@@ -9,7 +9,6 @@ import { MainProvider } from './providers/MainProvider.tsx'
 import { AuthProvider } from './providers/AuthProvider.tsx'
 import { ModalProvider } from './providers/ModalProvider.tsx'
 
-import Home from "./home/Page.tsx";
 import AuthGuard from './guards/AuthGuard.tsx'
 import IsAuth from './guards/isAuth';
 
@@ -21,14 +20,16 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 					<BrowserRouter>
 						<Routes>
 
-							<Route path="/" element={<Home />} />
-
-							<Route path='/'  element={<AuthGuard />}  >
-								<Route path="/app/*" element={<App />} />
+							<Route element={<AuthGuard />}  >
+								<Route path="/*" element={<App />} />
 							</Route>
 
 							<Route  element={<IsAuth />}>
-								<Route path='/connexion' element={<Login />} />
+								<Route path='/' element={<Login />} />
+							</Route>
+
+							<Route  element={<IsAuth />}>
+								<Route path={'/connexion'} element={<Login />} />
 							</Route>
 
 							<Route path='/inscription' element={<Register />} />

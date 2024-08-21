@@ -1,10 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import { useEffect, useRef, useState } from "react";
-import Sidebar from "../components/Sidebar";
 import { useMainState } from "../hooks/useMainState";
-import { Breadcrumb } from "../components/Breadcumb";
 
 
 export default function Layout() {
@@ -50,16 +46,16 @@ export default function Layout() {
     return (<>
         <div  ref={ref} onClick={handleClick} className="flex relative">
             <div ref={sidebarRef}>
-                <Sidebar  open={open} float={float}  />
+                {/* <Sidebar  open={open} float={float}  /> */}
             </div>
             <div  className="flex-1 flex flex-col  h-screen">
-                <Header toggle={toggle} />
+                {/* <Header toggle={toggle} /> */}
                 <div className="flex-1 flex flex-col bg-white p-2 md:px-4">
                     <div className=" bg-gray-100 rounded-2xl flex-1 md:px-6 p-4 py-0">
-                        <Breadcrumb link={getLinks(location.pathname)} />
+                        {/* <Breadcrumb link={getLinks(location.pathname)} /> */}
                         <Outlet />
                     </div>
-                    <Footer />
+                    {/* <Footer /> */}
                 </div>
             </div>
         </div>
