@@ -7,6 +7,7 @@ import logo2 from "../assets/logo.svg";
 import padlock from "../assets/padlock.png";
 import eye from "../assets/eye.svg";
 import eye2 from "../assets/eye-slash.svg";
+import idcard from "../assets/id-card.png";
 
 interface IputProps {
     label: string;
@@ -99,7 +100,7 @@ export default function Login() {
                                 label="Numéro de la carte d'indentité"
                                 type="text" placeholder="CNI"
                                 onChange={(e:any) => setCni(e.target.value)} id="CNI"
-                                leftImage={<img src={padlock} alt="padlock"className="h-[16px] w-[16px] absolute left-0" />}
+                                leftImage={<img src={idcard} alt="padlock"className="h-[16px] w-[16px] absolute left-0" />}
                             />
     
                             <Input
