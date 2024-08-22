@@ -1,77 +1,94 @@
-import { FaDoorOpen } from "react-icons/fa";
-import { useAuth } from "../hooks/useAuth";
-import { useLocation } from "react-router-dom";
+import {
+  FiGrid,
+  FiFileText,
+  FiMessageSquare,
+  FiBarChart2,
+  FiSettings,
+  FiLogOut,
+} from "react-icons/fi";
 import { NavLink } from "react-router-dom";
+import SamaKeuyitLogo from "../assets/Logo_dash-fonc.png";
+import LoggedInUserImage from "../assets/userImage.png";
 
-interface ISidebar {
-    open: boolean;
-    float?: boolean;
-    width?: number;
-    preview?: boolean;
-}
+const Sidebar = () => {
+  return (
+    <div className="flex flex-col h-[95vh] w-15 bg-green-600 p-4 space-y-6 rounded-3xl fixed left-4 top-1/2 transform -translate-y-1/2 shadow-lg">
+      <div className="flex justify-center mb-6">
+        <img src={SamaKeuyitLogo} alt="Logo" className="w-7 h-7" />
+      </div>
+      <nav className="flex flex-col items-center space-y-8 flex-grow">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive
+              ? "text-white bg-green-500 p-2 rounded-full"
+              : "text-white p-2 hover:bg-green-500 rounded-full"
+          }
+        >
+          <FiGrid className="text-2xl" />
+        </NavLink>
 
-export default function Sidebar ({open, float, width}: ISidebar) {
+        <NavLink
+          to="/demandes"
+          className={({ isActive }) =>
+            isActive
+              ? "text-white bg-green-500 p-2 rounded-full"
+              : "text-white p-2 hover:bg-green-500 rounded-full"
+          }
+        >
+          <FiFileText className="text-2xl" />
+        </NavLink>
 
-    const { getUser } = useAuth();
+        <NavLink
+          to="/messagerie"
+          className={({ isActive }) =>
+            isActive
+              ? "text-white bg-green-500 p-2 rounded-full"
+              : "text-white p-2 hover:bg-green-500 rounded-full"
+          }
+        >
+          <FiMessageSquare className="text-2xl" />
+        </NavLink>
 
-    const location = useLocation();
-    const isCurrent = (path: string) => {
-        return location.pathname.includes(path);
-    }
+        <NavLink
+          to="/statistiques"
+          className={({ isActive }) =>
+            isActive
+              ? "text-white bg-green-500 p-2 rounded-full"
+              : "text-white p-2 hover:bg-green-500 rounded-full"
+          }
+        >
+          <FiBarChart2 className="text-2xl" />
+        </NavLink>
 
-    return (<>
-        <div className={`h-screen bg-white min-w-64 p-4 md:pr-0
-            flex flex-col z-[1000]
-            ${open ? 'left-0' : '-left-full'} 
-            ${float ? 'fixed' : 'relative'}
-            ${width ? 'w-'+ width : ''}`} style={{
-                transition: "left 0.25s"
-            }}>
+        <NavLink
+          to="/parametres"
+          className={({ isActive }) =>
+            isActive
+              ? "text-white bg-green-500 p-2 rounded-full"
+              : "text-white p-2 hover:bg-green-500 rounded-full"
+          }
+        >
+          <FiSettings className="text-2xl" />
+        </NavLink>
+      </nav>
+      <div className="mt-8 flex justify-center">
+        <NavLink
+          to="/connexion"
+          className="text-white p-2 hover:bg-green-500 rounded-full"
+        >
+          <FiLogOut className="text-2xl" />
+        </NavLink>
+      </div>
+      <div className="mt-auto flex justify-center">
+        <img
+          src={LoggedInUserImage}
+          alt="User Avatar"
+          className="w-10 h-10 rounded-full border-2 border-transparent"
+        />
+      </div>
+    </div>
+  );
+};
 
-            <div className="w-full h-56 rounded-xl bg-gray-400 flex flex-col justify-evenly">
-                <div className="flex mx-auto items-center justify-center size-32 rounded-full bg-white">
-
-                </div>
-                <div>
-                    <div className="text-white text-center font-semibold">{getUser()?.email}</div>
-                    <div className="text-white text-center">{getUser()?.role}</div>
-                </div>
-            </div>
-            <div className="flex-1 py-4">
-                <div>
-                    <div className="text-gray-500 text-sm font-bold uppercase">Main</div>
-                    <ul>
-                        <Link to="/app" children="Dashboard" active={
-                            !isCurrent("/app/")
-                        } />
-                        <Link to="/app/discussions" children="Discussions" active={
-                            isCurrent("/discussions")
-                        } />
-                    </ul>
-                </div>
-                <div>
-                    <div className="text-gray-500 text-sm font-bold uppercase mt-4">Settings</div>
-                    <ul>
-                        <Link to="/app/settings" children="General" active={
-                            isCurrent("/settings") && !isCurrent("/settings/")
-                        } />
-                        <Link to="/app/settings/security" children="Security" active={
-                            isCurrent("/security")
-                        } />
-                    </ul>
-                </div>
-            </div>
-            <NavLink to={""} className="py-4 flex items-center gap-4">
-                <FaDoorOpen className="inline-block text-gray-500 size-8" /> 
-            </NavLink>
-        </div>
-    </>)
-}
-
-const Link = ({icon, to, children, active}: {icon?: React.ReactNode, to: string, children: string, active: boolean}) => {
-    return (<>
-        <li className={` hover:bg-gray-100 rounded-lg ${active ? 'bg-gray-100' : ''}`}>
-            {icon} <NavLink to={to} className="text-gray-500 py-2 px-4 block ">{children}</NavLink>
-        </li>
-    </>)
-}
+export default Sidebar;
