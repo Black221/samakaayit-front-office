@@ -1,4 +1,4 @@
-import { RVModel } from "../types/models";
+import { RVModel } from "../../types/models";
 import RVItem from "./RVItem";
 
 interface RVListProps {
