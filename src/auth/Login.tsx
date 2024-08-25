@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Button from "../components_obs/Button";
+import Button from "../components/Button";
 import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import illustration from "../assets/illustration-job.png";

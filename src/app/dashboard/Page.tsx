@@ -1,5 +1,5 @@
 import Chart from "react-apexcharts";
-import RVList from "../../components_obs/RVList";
+import RVList from "../../components/rendez_vous/RVList";
 
 const RVs = [
   {

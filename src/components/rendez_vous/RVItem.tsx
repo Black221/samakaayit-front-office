@@ -1,5 +1,5 @@
-import { getRandomColor, capitalizeFirstLetter } from "../utils";
-import { RVModel } from "../types/models";
+import { getRandomColor, capitalizeFirstLetter } from "../../utils";
+import { RVModel } from "../../types/models";
 
 interface RVProps {
   rv: RVModel;
