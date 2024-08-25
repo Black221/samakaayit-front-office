@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Layout from "./Layout";
+import Dashboard from "./dashboard/Page";
 
 import { useMainState } from "../hooks/useMainState";
 import { useEffect } from "react";
@@ -24,7 +25,7 @@ function App() {
     <>
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<div>Dashboard</div>} />
+          <Route path="/" element={<Dashboard />} />
           <Route path="/demandes/*" element={<div>Demandes</div>} />
           <Route path="/messagerie" element={<div>Messagerie</div>} />
           <Route path="/statistiques" element={<div>Statistiques</div>} />
