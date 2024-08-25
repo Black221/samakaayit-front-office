@@ -5,14 +5,14 @@ interface DemandeItemProps {
     date: string;
     numDossier: string;
     status: string;
-};
+}
 
 const STATUS_COLOR: {[key: string]: string} = {
     "En attente": "bg-[#EAEAEA]",
     "Confirmé": "bg-[#DFFFEA]",
     "Traité": "bg-[#FFFAC2]",
     "Cas complexe": "bg-[#F0CBB8]",
-};
+}
 
 
 const  DemandeItem = ({name, date, numDossier, status }: DemandeItemProps) => {
