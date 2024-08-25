@@ -2,7 +2,8 @@ import { FiSearch, FiBell, FiCalendar } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 
 const Header = () => {
-  let location = useLocation();
+  const location = useLocation();
+  
   const HeaderTitle = () => {
     let title = "";
     switch (location.pathname) {
