@@ -12,7 +12,7 @@ import LoggedInUserImage from "../assets/userImage.png";
 
 const Sidebar = () => {
   return (
-    <div className="flex flex-col h-[95vh] w-15 bg-green-600 p-4 space-y-6 rounded-3xl fixed left-4 top-1/2 transform -translate-y-1/2 shadow-lg">
+    <div className="flex flex-col h-[95vh] w-15 bg-primary-700 p-4 space-y-6 rounded-3xl fixed left-4 top-1/2 transform -translate-y-1/2 shadow-lg">
       <div className="flex justify-center mb-6">
         <img src={SamaKeuyitLogo} alt="Logo" className="w-7 h-7" />
       </div>
