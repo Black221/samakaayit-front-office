@@ -6,20 +6,20 @@ const Header = () => {
   
   const HeaderTitle = () => {
     let title = "";
-    switch (location.pathname) {
-      case "/":
+    switch (true) {
+      case location.pathname === "/":
         title = "Tableau de bord";
         break;
-      case "/demandes":
+      case location.pathname.startsWith("/demandes"):
         title = "Gestion des demandes";
         break;
-      case "/messagerie":
+      case location.pathname === "/messagerie":
         title = "Messagerie";
         break;
-      case "/statistiques":
+      case location.pathname === "/statistiques":
         title = "Statistiques";
         break;
-      case "/parametres":
+      case location.pathname === "/parametres":
         title = "Paramètres";
         break;
     }

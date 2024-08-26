@@ -2,48 +2,86 @@
 import { createContext, ReactNode, useState } from "react";
 
 interface Obj {
-    [key: string]: any | Obj;
+  [key: string]: any | Obj;
 }
 
 export const MainContext = createContext<{
-    search: string, setSearch: (search: string) => void,
-    sidebar:string, setSidebar: (sidebar: string) => void,
-    screenSize: number, setScreenSize: (size: number) => void,
-    largeScreen: boolean, setLargeScreen: (isLarge: boolean) => void,
-    notifications: Obj[], setNotifications: (notifications: Obj[]) => void,
-    messages: Obj[], setMessages: (messages: Obj[]) => void,
+  search: string;
+  setSearch: (search: string) => void;
+  activeStatus: string;
+  setActiveStatus: (search: string) => void;
+  sidebar: string;
+  setSidebar: (sidebar: string) => void;
+  screenSize: number;
+  setScreenSize: (size: number) => void;
+  largeScreen: boolean;
+  setLargeScreen: (isLarge: boolean) => void;
+  notifications: Obj[];
+  setNotifications: (notifications: Obj[]) => void;
+  messages: Obj[];
+  setMessages: (messages: Obj[]) => void;
 }>({
-    search: '', setSearch: () => {return;},
-    sidebar: '', setSidebar: () => {return;},
-    screenSize: 0, setScreenSize: () => {return;},
-    largeScreen: false, setLargeScreen: () => {return;},
-    notifications: [], setNotifications: () => {return;},
-    messages: [], setMessages: () => {return;},
+  search: "",
+  setSearch: () => {
+    return;
+  },
+  sidebar: "",
+  setSidebar: () => {
+    return;
+  },
+  activeStatus: "",
+  setActiveStatus: () => {
+    return;
+  },
+  screenSize: 0,
+  setScreenSize: () => {
+    return;
+  },
+  largeScreen: false,
+  setLargeScreen: () => {
+    return;
+  },
+  notifications: [],
+  setNotifications: () => {
+    return;
+  },
+  messages: [],
+  setMessages: () => {
+    return;
+  },
 });
 
+export const MainProvider = ({ children }: { children: ReactNode }) => {
+  const [search, setSearch] = useState<string>("");
+  const [sidebar, setSidebar] = useState<string>("");
+  const [activeStatus, setActiveStatus] = useState<string>("En attente");
 
+  const [screenSize, setScreenSize] = useState<number>(0);
+  const [largeScreen, setLargeScreen] = useState<boolean>(false);
 
-export const MainProvider = ({ children } : { children: ReactNode}) => {
+  const [notifications, setNotifications] = useState<Obj[]>([]);
+  const [messages, setMessages] = useState<Obj[]>([]);
 
-    const [search, setSearch] = useState<string>('');
-    const [sidebar, setSidebar] = useState<string>('');
-
-    const [screenSize, setScreenSize] = useState<number>(0);
-    const [largeScreen, setLargeScreen] = useState<boolean>(false);
-
-    const [notifications, setNotifications] = useState<Obj[]>([]);
-    const [messages, setMessages] = useState<Obj[]>([]);
-
-    return (
-        <MainContext.Provider value={{
-            sidebar, setSidebar,
-            search, setSearch,
-            screenSize, setScreenSize,
-            largeScreen, setLargeScreen,
-            notifications, setNotifications,
-            messages, setMessages,
-        }}>
-            {children}
-        </MainContext.Provider>
-    );
-};  
+  return (
+    <MainContext.Provider
+      value={{
+        activeStatus,
+        setActiveStatus,
+        sidebar,
+        setSidebar,
+        search,
+        setSearch,
+        screenSize,
+        setScreenSize,
+        largeScreen,
+        setLargeScreen,
+        notifications,
+        setNotifications,
+        messages,
+        setMessages,
+      }}
+    >
+      {children}
+    </MainContext.Provider>
+  );
+};
