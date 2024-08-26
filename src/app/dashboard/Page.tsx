@@ -27,10 +27,10 @@ const Dashboard = () => {
         <div className="grid grid-cols-2 gap-6">
           <div className="bg-white shadow-md rounded-3xl p-6">
             <h3 className="text-ss font-semibold mb-4 text-tertiary-1000">
-              Nombre total de demande
+              Nombre total de demandes
             </h3>
             <div className="flex items-center space-x-2">
-              <span className="text-4xl font-medium">6300</span>
+              <span className="text-ns font-medium">6300</span>
               <span className="text-secondary-500 text-sm bg-secondary-100 px-2 py-1 rounded">
                 ↑ 1.2%
               </span>
