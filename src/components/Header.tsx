@@ -1,4 +1,4 @@
-import { FiSearch, FiBell, FiCalendar } from "react-icons/fi";
+import { FiSearch, FiBell } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 import calendarImage from "../assets/calendar-icon.png";
 
