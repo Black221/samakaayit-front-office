@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import idCard from "../../assets/id-card.png";
 
 interface DemandeItemProps {
@@ -5,6 +6,7 @@ interface DemandeItemProps {
     date: string;
     numDossier: string;
     status: string;
+    onPress: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 const STATUS_COLOR: {[key: string]: string} = {
@@ -15,17 +17,20 @@ const STATUS_COLOR: {[key: string]: string} = {
 }
 
 
-const  DemandeItem = ({name, date, numDossier, status }: DemandeItemProps) => {
+const DemandeItem = ({ name, date, numDossier, status, onPress }: DemandeItemProps) => {
+  
+  // const location = useLocation();
+
   return (
-    <div className="flex flex-row items-center py-[10px]">
-        <img src={idCard} alt="id-card" className="w-6 h-6 mr-[16px]"/>
-        
-        <div className="flex flex-col">
-              <h3 className="text-sm font-bold">{name}</h3>
-              <p className="text-xs font-bold">N° de dossier: {numDossier}</p>
-              <p className="text-xs font-bold">Date de dépot : {date}</p>
-          </div>
-        <div className="flex-1"></div>
+    <button onClick={onPress} className="flex w-full flex-row items-center py-[10px] cursor-pointer">
+      <img src={idCard} alt="id-card" className="w-6 h-6 mr-[16px]"/>
+      
+      <div className="flex flex-col items-start">
+            <h3 className="text-sm font-bold">{name}</h3>
+            <p className="text-xs font-bold">N° de dossier: {numDossier}</p>
+            <p className="text-xs font-bold">Date de dépot : {date}</p>
+        </div>
+      <div className="flex-1"></div>
       <span className={`rounded-[3px] px-3 text-black font-medium text-sm ${STATUS_COLOR[status]}`}>{status}</span>
 
       {/* ckeckbox */}
@@ -46,7 +51,7 @@ const  DemandeItem = ({name, date, numDossier, status }: DemandeItemProps) => {
         </label>
       </div> */}
       
-    </div>
+    </button>
   )
 }
 
