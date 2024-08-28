@@ -8,7 +8,7 @@ const ServiceSelection = () => {
   ];
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md w-75">
+    <div className="bg-white p-6 rounded-xl shadow-md w-75 h-70">
       <h2 className="text-lg font-semibold mb-4 font-body">Services</h2>
       <ul className="space-y-4">
         {services.map((service, index) => (
