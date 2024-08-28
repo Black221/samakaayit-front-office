@@ -1,35 +1,36 @@
 import idCard from "../../assets/id-card.png";
+import { DemandeModel } from "../../types/models";
 
 interface DemandeItemProps {
-    name: string;
-    date: string;
-    numDossier: string;
-    status: string;
-    onPress: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  demande: DemandeModel,
+  onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-const STATUS_COLOR: {[key: string]: string} = {
-    "En attente": "bg-[#EAEAEA]",
-    "Confirmé": "bg-[#DFFFEA]",
-    "Traité": "bg-[#FFFAC2]",
-    "Cas complexe": "bg-[#F0CBB8]",
-}
+const STATUS_COLOR: { [key: string]: string } = {
+  "En attente": "bg-[#EAEAEA]",
+  Confirmé: "bg-[#DFFFEA]",
+  Traité: "bg-[#FFFAC2]",
+  "Cas complexe": "bg-[#F0CBB8]",
+};
 
-
-const DemandeItem = ({ name, date, numDossier, status, onPress }: DemandeItemProps) => {
-  
-
+const DemandeItem = ({ demande, onClick }: DemandeItemProps) => {
   return (
-    <button onClick={onPress} className="flex w-full flex-row items-center py-[10px] cursor-pointer">
-      <img src={idCard} alt="id-card" className="w-6 h-6 mr-[16px]"/>
-      
+    <button onClick={onClick} className="flex flex-row items-center justify-between w-full py-[10px]">
+      <img src={idCard} alt="id-card" className="w-6 h-6 mr-[16px]" />
+
       <div className="flex flex-col items-start">
-            <h3 className="text-sm font-bold">{name}</h3>
-            <p className="text-xs font-bold">N° de dossier: {numDossier}</p>
-            <p className="text-xs font-bold">Date de dépot : {date}</p>
-        </div>
+        <h3 className="text-sm font-bold">{demande.name}</h3>
+        <p className="text-xs font-bold">N° de dossier: {demande.numDossier}</p>
+        <p className="text-xs font-bold">Date de dépot : {demande.date}</p>
+      </div>
       <div className="flex-1"></div>
-      <span className={`rounded-[3px] px-3 text-black font-medium text-sm ${STATUS_COLOR[status]}`}>{status}</span>
+      <span
+        className={`rounded-[3px] px-3 text-black font-medium text-sm ${
+          STATUS_COLOR[demande.status]
+        }`}
+      >
+        {demande.status}
+      </span>
 
       {/* ckeckbox */}
       {/* <div className="inline-flex items-center ml-2">
@@ -48,9 +49,8 @@ const DemandeItem = ({ name, date, numDossier, status, onPress }: DemandeItemPro
           </span>
         </label>
       </div> */}
-      
     </button>
-  )
-}
+  );
+};
 
 export default DemandeItem;

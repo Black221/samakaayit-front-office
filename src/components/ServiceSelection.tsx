@@ -17,8 +17,8 @@ const ServiceSelection = () => {
             to={service.route}
             className={({ isActive }) =>
               isActive
-                ? "block bg-green-500 text-white font-medium px-4 py-2 rounded-lg"
-                : "block bg-white text-gray-800 hover:bg-green-100 hover:text-gray-900 font-medium px-4 py-2 rounded-lg"
+                ? "block bg-primary-700 text-white font-medium px-4 py-2 rounded-lg"
+                : "block bg-white text-gray-800 hover:bg-primary-50 hover:text-gray-900 font-medium px-4 py-2 rounded-lg"
             }
           >
             {service.label}
