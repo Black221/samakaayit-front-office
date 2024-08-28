@@ -9,7 +9,7 @@ const Layout = () => {
 
       <div className="flex flex-1">
         <ServiceSelection />
-        <div className="flex-1 p-6">
+        <div className="flex-1 px-6">
           <Outlet />
         </div>
       </div>

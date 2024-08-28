@@ -1,4 +1,3 @@
-import { useLocation } from "react-router-dom";
 import idCard from "../../assets/id-card.png";
 
 interface DemandeItemProps {
@@ -19,7 +18,6 @@ const STATUS_COLOR: {[key: string]: string} = {
 
 const DemandeItem = ({ name, date, numDossier, status, onPress }: DemandeItemProps) => {
   
-  // const location = useLocation();
 
   return (
     <button onClick={onPress} className="flex w-full flex-row items-center py-[10px] cursor-pointer">

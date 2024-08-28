@@ -1,4 +1,4 @@
-import DemandeItem from './DemandeItem'
+import DemandeItem from "./DemandeItem";
 
 export default function ListDemande({ demandes, onPress } : {demandes:any, onPress:React.MouseEventHandler<HTMLButtonElement> | undefined}) {
   return (

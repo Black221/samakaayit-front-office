@@ -1,4 +1,5 @@
-import DetailDemande from "../../../../components/Demandes/DetailDemande"
+import DetailDemande from "../../../../components/demandes/DetailDemande"
+import {useNavigate} from "react-router-dom";
 
 const details = {
     "prenom": "Aminata",
@@ -21,10 +22,20 @@ const details = {
 
 
 export default function Details() {
-
+  const navigate = useNavigate();
 
   return (
     <div>
+      {/* Go back to the list of demands */}
+      <button
+        className="h-8 px-4 mb-4 text-sm text-indigo-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800"
+        type="button"
+        onClick={() => {navigate(-1);}}
+      >
+        Retour
+      </button>
+
+      {/* Display the details of the demand */}
       <DetailDemande
         prenom={details.prenom}
         nom={details.nom}

@@ -1,5 +1,5 @@
 import { useLocation, useNavigate} from "react-router-dom";
-import ListDemande from "../../../../components/Demandes/ListDemande";
+import ListDemande from "../../../../components/demandes/ListDemande";
 
 const demandes = [
   {
