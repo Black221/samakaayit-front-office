@@ -6,6 +6,7 @@ import demandeIcon from "../assets/demande-icon-light.svg";
 import messagerieIcon from "../assets/message-icon-light.svg";
 import statistiqueIcon from "../assets/statistiques-icon-light.svg";
 import parametreIcon from "../assets/setting-icon-light.svg";
+import rvIcon from "../assets/rv-icon-light.svg";
 import logoutIcon from "../assets/logout-icon-light.svg";
 
 const navigation = [
@@ -20,6 +21,10 @@ const navigation = [
   {
     route: "/messagerie",
     icon: messagerieIcon,
+  },
+  {
+    route: "/rendez-vous",
+    icon: rvIcon,
   },
   {
     route: "/statistiques",

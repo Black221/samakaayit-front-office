@@ -29,6 +29,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/demandes/*" element={<Demandes />} />
           <Route path="/messagerie" element={<div>Messagerie</div>} />
+          <Route path="/rendez-vous" element={<div>Rendez-vous</div>} />
           <Route path="/statistiques" element={<div>Statistiques</div>} />
           <Route path="/parametres" element={<div>Paramètres</div>} />
         </Route>
