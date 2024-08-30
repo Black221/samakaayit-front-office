@@ -4,9 +4,10 @@ import DemandeItem from "./DemandeItem";
 
 interface ListDemandeProps {
   demandes: DemandeModel[];
+  onClick:  React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-export default function ListDemande({ demandes }: ListDemandeProps) {
+export default function ListDemande({ demandes, onClick }: ListDemandeProps) {
   const navigate = useNavigate();
   return (
     <div>
@@ -16,7 +17,7 @@ export default function ListDemande({ demandes }: ListDemandeProps) {
             key={demande.numDossier}
             className="border-b-[0.3px] border-[#7B7C7E]"
           >
-            <DemandeItem demande={demande} />
+            <DemandeItem demande={demande} onClick={onClick} />
           </li>
         ))}
       </ul>
@@ -31,3 +32,4 @@ export default function ListDemande({ demandes }: ListDemandeProps) {
     </div>
   );
 }
+

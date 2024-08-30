@@ -2,7 +2,8 @@ import idCard from "../../assets/id-card.png";
 import { DemandeModel } from "../../types/models";
 
 interface DemandeItemProps {
-  demande: DemandeModel;
+  demande: DemandeModel,
+  onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 const STATUS_COLOR: { [key: string]: string } = {
@@ -12,12 +13,12 @@ const STATUS_COLOR: { [key: string]: string } = {
   "Cas complexe": "bg-[#F0CBB8]",
 };
 
-const DemandeItem = ({ demande }: DemandeItemProps) => {
+const DemandeItem = ({ demande, onClick }: DemandeItemProps) => {
   return (
-    <div className="flex flex-row items-center py-[10px]">
+    <button onClick={onClick} className="flex flex-row items-center justify-between w-full py-[10px]">
       <img src={idCard} alt="id-card" className="w-6 h-6 mr-[16px]" />
 
-      <div className="flex flex-col">
+      <div className="flex flex-col items-start">
         <h3 className="text-sm font-bold">{demande.name}</h3>
         <p className="text-xs font-bold">N° de dossier: {demande.numDossier}</p>
         <p className="text-xs font-bold">Date de dépot : {demande.date}</p>
@@ -48,7 +49,7 @@ const DemandeItem = ({ demande }: DemandeItemProps) => {
           </span>
         </label>
       </div> */}
-    </div>
+    </button>
   );
 };
 

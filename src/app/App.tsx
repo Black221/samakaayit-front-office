@@ -23,17 +23,15 @@ function App() {
   });
 
   return (
-    <>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/demandes/*" element={<Demandes />} />
-          <Route path="/messagerie" element={<div>Messagerie</div>} />
-          <Route path="/statistiques" element={<div>Statistiques</div>} />
-          <Route path="/parametres" element={<div>Paramètres</div>} />
-        </Route>
-      </Routes>
-    </>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/demandes/*" element={<Demandes />} />
+        <Route path="/messagerie" element={<div>Messagerie</div>} />
+        <Route path="/statistiques" element={<div>Statistiques</div>} />
+        <Route path="/parametres" element={<div>Paramètres</div>} />
+      </Route>
+    </Routes>
   );
 }
 
