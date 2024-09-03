@@ -8,6 +8,7 @@ import padlock from "../assets/padlock.png";
 import eye from "../assets/eye.svg";
 import eye2 from "../assets/eye-slash.svg";
 import idcard from "../assets/id-card.png";
+import { Toaster, toast } from 'sonner'
 
 interface IputProps {
     label: string;
@@ -19,7 +20,7 @@ interface IputProps {
     rightButton?: React.ReactElement
 }
 
-function Input({id, label, type="text", onChange, placeholder, leftImage, rightButton} : IputProps) {
+function Input({id, label, type="text", onChange, placeholder, leftImage, rightButton} : Readonly<IputProps>) {
     return (
         <div className="border-b-2 border-[#7B7C7E]">
             <label htmlFor={id} className="block text-base font-medium text-black mb-2">{label} </label>
@@ -31,6 +32,7 @@ function Input({id, label, type="text", onChange, placeholder, leftImage, rightB
         </div>
     );
 }
+
 
 
 export default function Login() {
@@ -66,6 +68,7 @@ export default function Login() {
                 navigate("/app");
             } else {
                 setMessage("CNI ou mot de passe incorrect");
+                toast.error(message);
                 setLoading(false);
             }
         }, 3000);
@@ -87,13 +90,7 @@ export default function Login() {
             <div className="w-1/2">
                 <form className="w-[429px] mx-auto mt-[112px] flex flex-col" onSubmit={onSubmit} >
                     <h1 className="font-heading text-center text-black font-semibold text-[36px]/[45px] "> Connexion </h1>
-                    {
-                        message &&
-                        <div className="text-center text-red-500">
-                            {message}
-                        </div>
-                    }
-
+                   
                     <div className="mt-[117px]">
                        <div className="flex flex-col gap-8">
                             <Input
@@ -122,6 +119,16 @@ export default function Login() {
                             ) : <span className="text-white">Se connecter</span>
                         } disabled={loading} />
                       
+                        {/* toaster */}
+                        {/* Custom toast */}
+                        {/* {toast.custom((t) => (
+                            <div>
+                                <h1>{message}</h1>
+                                <button onClick={() => toast.dismiss(t)}>Dismiss</button>
+                            </div>
+                        ))} */}
+                        <Toaster richColors position="top-center" />
+                        
                     </div>
                      
                 </form>
