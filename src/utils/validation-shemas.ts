@@ -18,23 +18,6 @@ export { schemas };
  * schema = schema to match with
  *
  */
-// const { data, error } = Joi.validate(body, loginSchema);
-// error undefined if valid
-
-// middleware function
-// const validationMiddleware = (schema, property) => {
-//   return (req, res, next) => {
-//     const { error } = Joi.validate(req.body, schema);
-//     const valid = error == null;
-
-//     if (valid) {
-//       next();
-//     } else {
-//       const { details } = error;
-//       const message = details.map((i) => i.message).join(',');
-
-//       console.log('error', message);
-//       res.status(422).json({ error: message });
-//     }
-//   };
-// };
+// const { error, value } = await loginSchema.validateAsync(body);
+// error undefined if validation is successful
+// value contains the validated data
