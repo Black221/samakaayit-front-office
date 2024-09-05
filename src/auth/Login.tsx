@@ -9,6 +9,8 @@ import eye from "../assets/eye.svg";
 import eye2 from "../assets/eye-slash.svg";
 import idcard from "../assets/id-card.png";
 import { Toaster, toast } from 'sonner'
+import Joi from "joi";
+import { schemas } from "../utils/validation-shemas";
 
 interface IputProps {
     label: string;
@@ -54,10 +56,17 @@ export default function Login() {
     const onSubmit = (e: any) => {
         e.preventDefault();
         setLoading(true);
-        setTimeout(() => {
+        try {
+            const body = {
+                cni,
+                password
+            };
+        
+            const { value, error } = schemas.loginSchema.validate(body);
+            console.log(value, error);
+            if (error) throw new Error("Invalid login or password");
             const user = USERS_TEST.find(user => user.cni === cni && user.password === password);
-
-            if(user) {
+            if (user) {
                 setMessage("");
                 login({
                     id: user.id,
@@ -70,8 +79,15 @@ export default function Login() {
                 setMessage("CNI ou mot de passe incorrect");
                 toast.error(message);
                 setLoading(false);
+            
             }
-        }, 3000);
+
+        } catch (error:any) {
+            setMessage("Champs invalides");
+            toast.error(message);
+        } finally {
+            setLoading(false);
+        }
     }
 
 

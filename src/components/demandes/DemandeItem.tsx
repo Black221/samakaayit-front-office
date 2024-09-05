@@ -3,7 +3,7 @@ import { DemandeModel } from "../../types/models";
 
 interface DemandeItemProps {
   demande: DemandeModel,
-  onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 const STATUS_COLOR: { [key: string]: string } = {

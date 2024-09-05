@@ -4,7 +4,7 @@ import DemandeItem from "./DemandeItem";
 
 interface ListDemandeProps {
   demandes: DemandeModel[];
-  onClick:  React.MouseEventHandler<HTMLButtonElement> | undefined;
+  onClick?:  React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 export default function ListDemande({ demandes, onClick }: ListDemandeProps) {
