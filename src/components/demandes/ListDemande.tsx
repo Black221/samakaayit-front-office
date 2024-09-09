@@ -5,21 +5,37 @@ import DemandeItem from "./DemandeItem";
 interface ListDemandeProps {
   demandes: DemandeModel[];
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  status?: "En attente" | "Confirmé" | "Traité" | "Rejeté" | "Cas complexes";
 }
 
-export default function ListDemande({ demandes, onClick }: ListDemandeProps) {
+export default function ListDemande({
+  demandes,
+  onClick,
+  status,
+}: ListDemandeProps) {
   const navigate = useNavigate();
   return (
     <div>
       <ul className="py-6">
-        {demandes.map((demande) => (
-          <li
-            key={demande.numDossier}
-            className="border-b-[0.3px] border-[#7B7C7E]"
-          >
-            <DemandeItem demande={demande} onClick={onClick} />
-          </li>
-        ))}
+        {status
+          ? demandes
+              .filter((demande) => demande.status === status)
+              .map((demande) => (
+                <li
+                  key={demande.numDossier}
+                  className="border-b-[0.3px] border-[#7B7C7E]"
+                >
+                  <DemandeItem demande={demande} onClick={onClick} />
+                </li>
+              ))
+          : demandes.map((demande) => (
+              <li
+                key={demande.numDossier}
+                className="border-b-[0.3px] border-[#7B7C7E]"
+              >
+                <DemandeItem demande={demande} onClick={onClick} />
+              </li>
+            ))}
       </ul>
       {demandes.length > 7 && (
         <button
