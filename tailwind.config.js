@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       screens: {
-        xl: '1279px',
+        // xl: '1279px',
       },
       colors: {
         'primary-900': '#005D23',

@@ -6,7 +6,6 @@ interface ListDemandeProps {
   demandes: DemandeModel[];
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
   status?: "En attente" | "Confirmé" | "Traité" | "Rejeté" | "Cas complexes";
-  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 export default function ListDemande({

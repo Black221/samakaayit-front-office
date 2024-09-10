@@ -36,7 +36,7 @@ const Header = () => {
     return new Date().toLocaleDateString("fr-FR", options);
   };
   return (
-    <header className="flex justify-between items-center p-4 bg-transparent ">
+    <header className="flex justify-between items-center px-4 bg-transparent ">
       <h1 className="text-subheading font-semibold font-jakarta">
         {HeaderTitle()}
       </h1>

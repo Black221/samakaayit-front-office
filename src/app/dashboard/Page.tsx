@@ -4,8 +4,10 @@ import ListDemande from "../../components/demandes/ListDemande";
 import MessageList from "../../components/messagerie/MessageList";
 import LoggedInUserImage from "../../assets/userImage.png";
 import useAxios from "../../hooks/useAxios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { axiosInstance } from "../config";
+import axios from "axios";
+import { BASE_URL } from "../../constants";
 
 const RVs = [
   {
@@ -64,15 +66,30 @@ const Messages = [
 ];
 
 const Dashboard = () => {
-  const [response, error, loading, axiosFetch] = useAxios();
+  // const [response, error, loading, axiosFetch] = useAxios();
+  // useEffect(() => {
+  //   axiosFetch({
+  //     axiosInstance: axiosInstance,
+  //     method: "get",
+  //     url: "requests/list",
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    axiosFetch({
-      axiosInstance: axiosInstance,
-      method: "get",
-      url: "requests",
-    });
+  const [response, setResponse] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  useEffect(()=>{
+    axios({
+      method: 'get',
+      url: BASE_URL + 'requests/list',
+      responseType: "json"
+    })
+    .then( (response) => setResponse(response) )
+    .finally( () => setLoading(false));
   }, []);
+  
+
+  console.log(response);
+
   return (
     <div className="grid grid-cols-12 gap-6">
       {/* Colonne principale (gauche) */}

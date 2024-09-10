@@ -22,9 +22,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               <Route element={<IsAuth />}>
                 <Route path={"/connexion"} element={<Login />} />
               </Route>
-
               <Route path="/inscription" element={<Register />} />
-
               <Route element={<AuthGuard />}>
                 <Route path="/*" element={<App />} />
               </Route>
