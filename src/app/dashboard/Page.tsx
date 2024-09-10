@@ -3,6 +3,9 @@ import RVList from "../../components/rendez_vous/RVList";
 import ListDemande from "../../components/demandes/ListDemande";
 import MessageList from "../../components/messagerie/MessageList";
 import LoggedInUserImage from "../../assets/userImage.png";
+import useAxios from "../../hooks/useAxios";
+import { useEffect } from "react";
+import { axiosInstance } from "../config";
 
 const RVs = [
   {
@@ -61,6 +64,15 @@ const Messages = [
 ];
 
 const Dashboard = () => {
+  const [response, error, loading, axiosFetch] = useAxios();
+
+  useEffect(() => {
+    axiosFetch({
+      axiosInstance: axiosInstance,
+      method: "get",
+      url: "requests",
+    });
+  }, []);
   return (
     <div className="grid grid-cols-12 gap-6">
       {/* Colonne principale (gauche) */}
@@ -71,7 +83,9 @@ const Dashboard = () => {
               Nombre total de demandes
             </h3>
             <div className="flex items-center space-x-2">
-              <span className="text-ns font-medium">6300</span>
+              <span className="text-ns font-medium">
+                {loading ? <p>Loading...</p> : response.data.length}
+              </span>
               <span className="text-secondary-500 text-sm bg-secondary-100 px-2 py-1 rounded">
                 ↑ 1.2%
               </span>
