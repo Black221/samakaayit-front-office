@@ -1,7 +1,10 @@
 import { useLocation, useNavigate} from "react-router-dom";
 import ListDemande from "../../../../components/demandes/ListDemande";
 import { DemandeModel } from "../../../../types/models";
-
+import { useEffect, useState } from "react";
+import axios from 'axios';
+// import useAxios from "../../../../hooks/useAxios";
+import Spinner from "../../../../components/Spinner";
 
 export default function List() {
 
@@ -19,7 +22,6 @@ export default function List() {
     "numDossier": "123456",
     "date": "22/08/2024",
     "status": "Traité",
-    
   },
   {
     "name": "Jane Smith",
@@ -34,6 +36,46 @@ export default function List() {
     "status": "En attente"
   }
 ];
+  // const [response, error, loading, axiosFetch] = useAxios();
+  
+  // useEffect(() => {
+  
+  //   const config = {
+  //     axiosInstance: axios,
+  //     method: 'GET', 
+  //     url: 'https://gouvhackaton-1.onrender.com/requests/list', 
+  //     requestConfig: [
+  //     ], 
+  //   };
+
+  //   axiosFetch(config);
+  //   console.log(response, error);
+  // }, [axiosFetch]);
+  
+  
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+
+  const url = 'https://gouvhackaton-1.onrender.com/requests/list';
+  
+  useEffect(() => {
+    setLoading(true);
+    axios.get(url)
+      .then(response => {
+        console.log(response);
+        setData(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+        setError(error);
+      }).finally(() => {
+        setLoading(false);
+      })
+  }, [url]);
+
+  if (loading) return  <div className="h-full min-h-[300px] w-full flex justify-center items-center"> <Spinner /> </div>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="flex flex-col justify-between min-h-[500px] w-full">
@@ -64,3 +106,5 @@ export default function List() {
     </div>
   )
 }
+
+

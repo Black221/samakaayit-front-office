@@ -1,11 +1,22 @@
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 const ServiceSelection = () => {
+  // const [services, setServices] = useState([]);
+
   const services = [
     { route: "Certificat-de-mariage", label: "Certificat de mariage" },
     { route: "Certificat-de-naissance", label: "Certificat de naissance" },
     { route: "Certificat-de-deces", label: "Certificat de décès" },
   ];
+
+  // useEffect(() => {
+  //   fetch("/api/services")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //     });
+  // }, []);
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-md w-75">
