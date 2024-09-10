@@ -40,4 +40,31 @@ function capitalizeFirstLetter(str: string) {
   return str.charAt(0).toUpperCase();
 }
 
-export { getRandomColor, capitalizeFirstLetter };
+const getDateinFrench = (date: Date) => {
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  return date.toLocaleDateString("fr-FR", options);
+};
+
+const getDateOfTypeStringInFrench = (date: string) => {
+  if (date) {
+    const formattedDate = new Date(date)
+      .toISOString()
+      .split("T")[0]
+      .split("-")
+      .reverse()
+      .join("-");
+    return formattedDate;
+  }
+};
+
+export {
+  getRandomColor,
+  capitalizeFirstLetter,
+  getDateinFrench,
+  getDateOfTypeStringInFrench,
+};

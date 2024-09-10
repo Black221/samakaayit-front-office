@@ -12,16 +12,13 @@ export default function ListDemande({ demandes, onClick }: ListDemandeProps) {
   return (
     <div>
       <ul className="py-6">
-        {demandes.map((demande) => (
-          <li
-            key={demande.numDossier}
-            className="border-b-[0.3px] border-[#7B7C7E]"
-          >
+        {demandes?.map((demande) => (
+          <li key={demande._id} className="border-b-[0.3px] border-[#7B7C7E]">
             <DemandeItem demande={demande} onClick={onClick} />
           </li>
         ))}
       </ul>
-      {demandes.length > 7 && (
+      {demandes?.length > 7 && (
         <button
           onClick={() => navigate("/demandes")}
           className="mt-4 text-sm text-primary-700 hover:underline"

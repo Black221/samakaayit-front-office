@@ -1,6 +1,7 @@
 import { FiSearch, FiBell } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 import calendarImage from "../assets/calendar-icon.png";
+import { getDateinFrench } from "../utils";
 
 const Header = () => {
   const location = useLocation();
@@ -26,15 +27,7 @@ const Header = () => {
     }
     return title;
   };
-  const getDateinFrench = () => {
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    return new Date().toLocaleDateString("fr-FR", options);
-  };
+
   return (
     <header className="flex justify-between items-center p-4 bg-transparent ">
       <h1 className="text-subheading font-semibold font-jakarta">
@@ -51,7 +44,7 @@ const Header = () => {
             height={15}
           />
           <span className="text-ss font-body font-medium">
-            {getDateinFrench()}
+            {getDateinFrench(new Date())}
           </span>
         </button>
       </div>

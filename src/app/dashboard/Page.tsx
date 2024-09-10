@@ -6,6 +6,7 @@ import LoggedInUserImage from "../../assets/userImage.png";
 import useAxios from "../../hooks/useAxios";
 import { useEffect } from "react";
 import { axiosInstance } from "../config";
+import { DemandeModel } from "../../types/models";
 
 const RVs = [
   {
@@ -22,21 +23,6 @@ const RVs = [
     name: "Anta Bintou Ndoye",
     time: "10:00",
     colorClass: "bg-red-500",
-  },
-];
-
-const Demandes = [
-  {
-    name: "Mari Maty",
-    date: "24-08-2024",
-    numDossier: "#090887",
-    status: "Confirmé",
-  },
-  {
-    name: "Madiop Sa Mame",
-    date: "25-08-2024",
-    numDossier: "#090887",
-    status: "Traité",
   },
 ];
 
@@ -73,6 +59,24 @@ const Dashboard = () => {
       url: "requests",
     });
   }, []);
+  // useEffect(() => {
+  //   axiosFetch({
+  //     axiosInstance: axiosInstance,
+  //     method: "get",
+  //     url: "rendezvous",
+  //   });
+  // }, []);
+
+  const numberOfRequestProcessed = response?.data.filter(
+    (demande: DemandeModel) => demande.state === "terminé"
+  ).length;
+  const percentageOfRequestProcessed =
+    (response?.data.filter(
+      (demande: DemandeModel) => demande.state === "terminé"
+    ).length /
+      response?.data.length) *
+    100;
+
   return (
     <div className="grid grid-cols-12 gap-6">
       {/* Colonne principale (gauche) */}
@@ -84,7 +88,7 @@ const Dashboard = () => {
             </h3>
             <div className="flex items-center space-x-2">
               <span className="text-ns font-medium">
-                {loading ? <p>Loading...</p> : response.data.length}
+                {loading ? <p>Loading...</p> : response?.data.length}
               </span>
               <span className="text-secondary-500 text-sm bg-secondary-100 px-2 py-1 rounded">
                 ↑ 1.2%
@@ -92,19 +96,21 @@ const Dashboard = () => {
             </div>
 
             <div className="mt-2">
-              <p className="text-tertiary-1000">Demande du dernier mois</p>
+              <p className="text-tertiary-1000">Demandes du dernier mois</p>
               <div className="relative pt-1 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-semibold">
-                    250 demandes traitées
+                    {numberOfRequestProcessed} demande(s) traitée(s)
                   </span>
                   <span className="text-sm font-semibold text-tertiary-1000">
-                    25%
+                    {percentageOfRequestProcessed}%
                   </span>
                 </div>
                 <div className="overflow-hidden h-4 mb-4 text-xs flex rounded-xl bg-primary-100">
                   <div
-                    style={{ width: "25%" }}
+                    style={{
+                      width: `${percentageOfRequestProcessed}%`,
+                    }}
                     className="shadow-none flex flex-col rounded-xl text-center whitespace-nowrap text-white justify-center bg-primary-700"
                   ></div>
                 </div>
@@ -145,10 +151,10 @@ const Dashboard = () => {
           </h3>
           <div>
             <p className="text-sm mb-4 text-primary-700 ">
-              Total de 1250 demandes
+              Total de {response?.data.length} demandes
             </p>
             <div className="space-y-4">
-              <ListDemande demandes={Demandes} />
+              <ListDemande demandes={response?.data} />
             </div>
           </div>
         </div>
