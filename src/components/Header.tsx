@@ -18,8 +18,8 @@ const Header = () => {
       case location.pathname === "/messagerie":
         title = "Messagerie";
         break;
-      case location.pathname === "/statistiques":
-        title = "Statistiques";
+      case location.pathname === "/rendez-vous":
+        title = "Rendez-vous";
         break;
       case location.pathname === "/parametres":
         title = "Paramètres";

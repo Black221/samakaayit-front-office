@@ -33,7 +33,7 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/demandes/*" element={<Demandes />} />
           <Route path="/messagerie" element={<Messagerie />} />
-          <Route path="/statistiques" element={<div>Statistiques</div>} />
+          <Route path="/rendez-vous" element={<div>Rendez-vous</div>} />
           <Route path="/parametres" element={<Profil />} />
         </Route>
       </Routes>

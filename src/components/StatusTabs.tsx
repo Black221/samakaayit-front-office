@@ -1,13 +1,7 @@
 import { useMainState } from "../hooks/useMainState";
 
 const StatusTabs = () => {
-  const tabs = [
-    "En attente",
-    "Confirmées",
-    "Traitées",
-    "Rejetées",
-    "Cas complexes",
-  ];
+  const tabs = ["En cours", "Confirmé", "Rejeté", "Terminé"];
   const { activeStatus, setActiveStatus } = useMainState();
 
   return (
