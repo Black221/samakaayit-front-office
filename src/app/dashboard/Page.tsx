@@ -3,11 +3,9 @@ import RVList from "../../components/rendez_vous/RVList";
 import ListDemande from "../../components/demandes/ListDemande";
 import MessageList from "../../components/messagerie/MessageList";
 import LoggedInUserImage from "../../assets/userImage.png";
-import axios from "axios";
-import { BASE_URL } from "../../constants";
-import { useQuery } from "@tanstack/react-query";
 import { Demande } from "../../types/models";
 import Spinner from "../../components/Spinner";
+import useFetchAllRequests from "../../hooks/useFetchAllResquests";
 
 const RVs = [
   {
@@ -24,21 +22,6 @@ const RVs = [
     name: "Anta Bintou Ndoye",
     time: "10:00",
     colorClass: "bg-red-500",
-  },
-];
-
-const Demandes = [
-  {
-    name: "Mari Maty",
-    date: "24-08-2024",
-    numDossier: "#090887",
-    status: "Confirmé",
-  },
-  {
-    name: "Madiop Sa Mame",
-    date: "25-08-2024",
-    numDossier: "#090887",
-    status: "Traité",
   },
 ];
 
@@ -66,18 +49,7 @@ const Messages = [
 ];
 
 const Dashboard = () => {
-  const getAllRequests = async () => {
-    const response = await axios.get(`${BASE_URL}/requests`);
-    return response.data;
-  };
-  const {
-    isLoading: isLoadingOnFetchingRequestsList,
-    isError: isErrorOnFetchingRequestsList,
-    data: requests = [],
-  } = useQuery({
-    queryKey: ["requests"],
-    queryFn: getAllRequests,
-  });
+  const { isLoadingOnFetchingRequestsList, requests } = useFetchAllRequests();
 
   const numberOfRequestProcessed = requests.data?.filter(
     (demande: Demande) => demande.state === "terminé"
@@ -87,7 +59,6 @@ const Dashboard = () => {
       .length /
       requests.data?.length) *
     100;
-
   return (
     <div className="grid grid-cols-12 gap-6">
       {/* Colonne principale (gauche) */}
@@ -100,12 +71,12 @@ const Dashboard = () => {
             <div className="flex items-center space-x-2">
               <span className="text-ns font-medium">
                 {isLoadingOnFetchingRequestsList ? (
-                  <div className="h-full min-h-[300px] w-full flex justify-center items-center">
+                  <span className="h-full min-h-[300px] w-full flex justify-center items-center">
                     {" "}
                     <Spinner />{" "}
-                  </div>
+                  </span>
                 ) : (
-                  requests.data.length
+                  requests.data?.length
                 )}
               </span>
               <span className="text-secondary-500 text-sm bg-secondary-100 px-2 py-1 rounded">
@@ -167,7 +138,7 @@ const Dashboard = () => {
           </h3>
           <div>
             <p className="text-sm mb-4 text-primary-700 ">
-              Total de 1250 demandes
+              Total de {requests.data?.length} demandes
             </p>
             <div className="space-y-4">
               <ListDemande demandes={requests.data} />
