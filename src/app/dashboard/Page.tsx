@@ -6,7 +6,7 @@ import LoggedInUserImage from "../../assets/userImage.png";
 import axios from "axios";
 import { BASE_URL } from "../../constants";
 import { useQuery } from "@tanstack/react-query";
-import { DemandeModel } from "../../types/models";
+import { Demande } from "../../types/models";
 import Spinner from "../../components/Spinner";
 
 const RVs = [
@@ -78,6 +78,16 @@ const Dashboard = () => {
     queryKey: ["requests"],
     queryFn: getAllRequests,
   });
+
+  const numberOfRequestProcessed = requests.data?.filter(
+    (demande: Demande) => demande.state === "terminé"
+  ).length;
+  const percentageOfRequestProcessed =
+    (requests.data?.filter((demande: Demande) => demande.state === "terminé")
+      .length /
+      requests.data?.length) *
+    100;
+
   return (
     <div className="grid grid-cols-12 gap-6">
       {/* Colonne principale (gauche) */}
@@ -104,19 +114,19 @@ const Dashboard = () => {
             </div>
 
             <div className="mt-2">
-              <p className="text-tertiary-1000">Demande du dernier mois</p>
+              <p className="text-tertiary-1000">Demandes du dernier mois</p>
               <div className="relative pt-1 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-semibold">
-                    250 demandes traitées
+                    {numberOfRequestProcessed} demande(s) traitée(s)
                   </span>
                   <span className="text-sm font-semibold text-tertiary-1000">
-                    25%
+                    {percentageOfRequestProcessed}%
                   </span>
                 </div>
                 <div className="overflow-hidden h-4 mb-4 text-xs flex rounded-xl bg-primary-100">
                   <div
-                    style={{ width: "25%" }}
+                    style={{ width: `${percentageOfRequestProcessed}%` }}
                     className="shadow-none flex flex-col rounded-xl text-center whitespace-nowrap text-white justify-center bg-primary-700"
                   ></div>
                 </div>
@@ -160,7 +170,7 @@ const Dashboard = () => {
               Total de 1250 demandes
             </p>
             <div className="space-y-4">
-              <ListDemande demandes={Demandes} />
+              <ListDemande demandes={requests.data} />
             </div>
           </div>
         </div>

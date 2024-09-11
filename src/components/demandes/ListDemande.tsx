@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { DemandeModel } from "../../types/models";
+import { Demande } from "../../types/models";
 import DemandeItem from "./DemandeItem";
 
 interface ListDemandeProps {
-  demandes: DemandeModel[];
+  demandes: Demande[];
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
-  status?: "En attente" | "Confirmé" | "Traité" | "Rejeté" | "Cas complexes";
+  status?: "en-cours" | "confirmé" | "terminé" | "rejeté";
 }
 
 export default function ListDemande({
@@ -19,25 +19,25 @@ export default function ListDemande({
       <ul className="py-6">
         {status
           ? demandes
-              .filter((demande) => demande.status === status)
+              ?.filter((demande) => demande.state === status)
               .map((demande) => (
                 <li
-                  key={demande.numDossier}
+                  key={demande._id}
                   className="border-b-[0.3px] border-[#7B7C7E]"
                 >
                   <DemandeItem demande={demande} onClick={onClick} />
                 </li>
               ))
-          : demandes.map((demande) => (
+          : demandes?.map((demande) => (
               <li
-                key={demande.numDossier}
+                key={demande._id}
                 className="border-b-[0.3px] border-[#7B7C7E]"
               >
                 <DemandeItem demande={demande} onClick={onClick} />
               </li>
             ))}
       </ul>
-      {demandes.length > 7 && (
+      {demandes?.length > 7 && (
         <button
           onClick={() => navigate("/demandes")}
           className="mt-4 text-sm text-primary-700 hover:underline"
