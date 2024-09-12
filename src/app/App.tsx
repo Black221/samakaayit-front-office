@@ -5,6 +5,7 @@ import Dashboard from "./dashboard/Page";
 import { useMainState } from "../hooks/useMainState";
 import { useEffect } from "react";
 import Demandes from "./gestion_demandes/Page";
+import Messagerie from "./messagerie/Page";
 
 function App() {
   const { setScreenSize, setLargeScreen } = useMainState();
@@ -27,7 +28,7 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/demandes/*" element={<Demandes />} />
-        <Route path="/messagerie" element={<div>Messagerie</div>} />
+        <Route path="/messagerie" element={<Messagerie />} />
         <Route path="/statistiques" element={<div>Statistiques</div>} />
         <Route path="/parametres" element={<div>Paramètres</div>} />
       </Route>
