@@ -4,7 +4,7 @@ import Spinner from "../../components/Spinner";
 import { BASE_URL } from "../../constants";
 import useFetchAllRequests from "../../hooks/useFetchAllResquests";
 import { useMainState } from "../../hooks/useMainState";
-
+import emptyfolder from "../../assets/empty-folder.svg";
 export default function List() {
   let { serviceId } = useParams();
   const { activeStatus, setActiveStatus } = useMainState();
@@ -32,11 +32,9 @@ export default function List() {
     }
   }
 
-console.log(url);
-console.log(activeStatus);
 
   const { isLoadingOnFetchingRequestsList, requests } = useFetchAllRequests(url);
-
+console.log(requests);
   if (isLoadingOnFetchingRequestsList)
     return (
       <div className="h-full min-h-[300px] w-full flex justify-center items-center">
@@ -46,46 +44,56 @@ console.log(activeStatus);
     );
 
   return (
-    <div className="flex flex-col justify-between min-h-[500px] w-full">
-      <ListDemande demandes={requests.data} />
-
-      {/* pagination */}
-      <div className="flex justify-end items-center">
-        <a
-          href="/demandes"
-          className="flex items-center px-4 py-2 mx-1 text-gray-800 transition-colors duration-300 transform bg-white rounded-md hover:bg-gray-200"
-        >
-          précédent
-        </a>
-
-        <a
-          href="/demandes"
-          className="items-center hidden px-4 py-2 mx-1 text-gray-800 transition-colors duration-300 transform bg-white rounded-md sm:flex hover:bg-gray-200"
-        >
-          1
-        </a>
-
-        <a
-          href="/demandes"
-          className="items-center hidden px-4 py-2 mx-1 text-gray-800 transition-colors duration-300 transform bg-white rounded-md sm:flex hover:bg-gray-200"
-        >
-          2
-        </a>
-
-        <a
-          href="/demandes"
-          className="items-center hidden px-4 py-2 mx-1 text-gray-800 transition-colors duration-300 transform bg-white rounded-md sm:flex hover:bg-gray-200"
-        >
-          3
-        </a>
-
-        <a
-          href="/demandes"
-          className="flex items-center px-4 py-2 mx-1 text-gray-800 transition-colors duration-300 transform bg-white rounded-md hover:bg-gray-200"
-        >
-          Suivant
-        </a>
-      </div>
+    <div className="flex flex-col justify-between h-full w-full">
+      {
+        !requests.data || requests.data.length === 0 ?
+        <div className="flex flex-col items-center w-full h-full">
+          <img src={emptyfolder}  alt="empty folder" className="w-16 h-16 mt-32 text-gray-200" />
+          <p className="text-center text-gray-800 text-xl">
+            Aucune demande à afficher
+          </p>
+        </div>
+        :
+        <>
+          <ListDemande demandes={requests.data} />
+          <div className="flex justify-end items-center">
+            <a
+              href="/demandes"
+              className="flex items-center px-4 py-2 mx-1 text-gray-800 transition-colors duration-300 transform bg-white rounded-md hover:bg-gray-200"
+            >
+              précédent
+            </a>
+    
+            <a
+              href="/demandes"
+              className="items-center hidden px-4 py-2 mx-1 text-gray-800 transition-colors duration-300 transform bg-white rounded-md sm:flex hover:bg-gray-200"
+            >
+              1
+            </a>
+    
+            <a
+              href="/demandes"
+              className="items-center hidden px-4 py-2 mx-1 text-gray-800 transition-colors duration-300 transform bg-white rounded-md sm:flex hover:bg-gray-200"
+            >
+              2
+            </a>
+    
+            <a
+              href="/demandes"
+              className="items-center hidden px-4 py-2 mx-1 text-gray-800 transition-colors duration-300 transform bg-white rounded-md sm:flex hover:bg-gray-200"
+            >
+              3
+            </a>
+    
+            <a
+              href="/demandes"
+              className="flex items-center px-4 py-2 mx-1 text-gray-800 transition-colors duration-300 transform bg-white rounded-md hover:bg-gray-200"
+            >
+              Suivant
+            </a>
+          </div>
+        </>
+      }
     </div>
   );
 }
