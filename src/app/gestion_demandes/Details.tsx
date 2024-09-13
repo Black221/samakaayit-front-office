@@ -1,4 +1,4 @@
-import DetailDemande from "../../../../components/demandes/DetailDemande"
+import DetailDemande from "../../components/demandes/DetailDemande"
 import {useNavigate} from "react-router-dom";
 
 const details = {

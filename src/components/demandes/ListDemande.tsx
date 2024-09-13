@@ -25,7 +25,7 @@ export default function ListDemande({
                   key={demande._id}
                   className="border-b-[0.3px] border-[#7B7C7E]"
                 >
-                  <DemandeItem demande={demande} onClick={onClick} />
+                  <DemandeItem demande={demande} onClick={() => navigate(`/demandes/details/${demande._id}`)} />
                 </li>
               ))
           : demandes?.map((demande) => (
@@ -33,7 +33,7 @@ export default function ListDemande({
                 key={demande._id}
                 className="border-b-[0.3px] border-[#7B7C7E]"
               >
-                <DemandeItem demande={demande} onClick={onClick} />
+                <DemandeItem demande={demande} onClick={() => navigate(`/demandes/details/${demande._id}`)} />
               </li>
             ))}
       </ul>

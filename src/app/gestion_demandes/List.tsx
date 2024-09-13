@@ -1,18 +1,41 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import ListDemande from "../../../../components/demandes/ListDemande";
-import Spinner from "../../../../components/Spinner";
-import useFetchAllRequests from "../../../../hooks/useFetchAllResquests";
+import { useParams } from "react-router-dom";
+import ListDemande from "../../components/demandes/ListDemande";
+import Spinner from "../../components/Spinner";
+import { BASE_URL } from "../../constants";
+import useFetchAllRequests from "../../hooks/useFetchAllResquests";
+import { useMainState } from "../../hooks/useMainState";
 
 export default function List() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const id = 1;
+  let { serviceId } = useParams();
+  const { activeStatus, setActiveStatus } = useMainState();
+  
+  let url = `${BASE_URL}/requests`;
 
-  function onBackPress(): void {
-    navigate(`${location.pathname}/details/${id}`);
+  if (serviceId !== undefined) {
+    url = `${BASE_URL}/requests/service/${serviceId}/fonctionnaire/66e03f39c99206104c170ff9`;
   }
 
-  const { isLoadingOnFetchingRequestsList, requests } = useFetchAllRequests();
+  if (activeStatus && serviceId) {
+    switch (activeStatus) {
+      case "En cours":
+        url = `${BASE_URL}/requests/service/${serviceId}/fonctionnaire/66e03f39c99206104c170ff9?status=en-cours`;
+        break;
+      case "Confirmé":
+        url = `${BASE_URL}/requests/service/${serviceId}/fonctionnaire/66e03f39c99206104c170ff9?status=confirmé`;
+        break;
+      case "Rejeté":
+        url = `${BASE_URL}/requests/service/${serviceId}/fonctionnaire/66e03f39c99206104c170ff9?status=rejeté`;
+        break;
+      case "Terminé":
+        url = `${BASE_URL}/requests/service/${serviceId}/fonctionnaire/66e03f39c99206104c170ff9?status=terminé`;
+        break;
+    }
+  }
+
+console.log(url);
+console.log(activeStatus);
+
+  const { isLoadingOnFetchingRequestsList, requests } = useFetchAllRequests(url);
 
   if (isLoadingOnFetchingRequestsList)
     return (
@@ -24,7 +47,7 @@ export default function List() {
 
   return (
     <div className="flex flex-col justify-between min-h-[500px] w-full">
-      <ListDemande demandes={requests.data} onClick={onBackPress} />
+      <ListDemande demandes={requests.data} />
 
       {/* pagination */}
       <div className="flex justify-end items-center">
