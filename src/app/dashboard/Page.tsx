@@ -6,6 +6,7 @@ import LoggedInUserImage from "../../assets/userImage.png";
 import { Demande } from "../../types/models";
 import Spinner from "../../components/Spinner";
 import useFetchAllRequests from "../../hooks/useFetchAllResquests";
+import { BASE_URL } from "../../constants";
 
 const RVs = [
   {
@@ -49,7 +50,18 @@ const Messages = [
 ];
 
 const Dashboard = () => {
-  const { isLoadingOnFetchingRequestsList, requests } = useFetchAllRequests();
+  const { isLoadingOnFetchingRequestsList, requests } = useFetchAllRequests(
+    `${BASE_URL}/requests`
+  );
+
+  // const getAllRendezVous = async () => {
+  //   const response = await axios.get(`${BASE_URL}/rendezvous`)
+  //   return response.data
+  // }
+  // const { data: rendezvous, isLoadingOnFetchingRendezVous } = useQuery({
+  //   queryKey: [],
+  //   queryFn: getAllRendezVous,
+  // })
 
   const numberOfRequestProcessed = requests.data?.filter(
     (demande: Demande) => demande.state === "terminé"
