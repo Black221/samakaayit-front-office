@@ -6,6 +6,7 @@ import LoggedInUserImage from "../../assets/userImage.png";
 import { Demande } from "../../types/models";
 import Spinner from "../../components/Spinner";
 import useFetchAllRequests from "../../hooks/useFetchAllResquests";
+import { BASE_URL } from "../../constants";
 
 const RVs = [
   {
@@ -49,15 +50,17 @@ const Messages = [
 ];
 
 const Dashboard = () => {
-  const { isLoadingOnFetchingRequestsList, requests } = useFetchAllRequests();
+  let url = `${BASE_URL}/requests`;
+  const { isLoadingOnFetchingRequestsList, requests } =
+    useFetchAllRequests(url);
 
-  const numberOfRequestProcessed = requests.data?.filter(
+  const numberOfRequestProcessed = requests?.filter(
     (demande: Demande) => demande.state === "terminé"
   ).length;
   const percentageOfRequestProcessed =
-    (requests.data?.filter((demande: Demande) => demande.state === "terminé")
+    (requests?.filter((demande: Demande) => demande.state === "terminé")
       .length /
-      requests.data?.length) *
+      requests?.length) *
     100;
   return (
     <div className="grid grid-cols-12 gap-6">
@@ -76,7 +79,7 @@ const Dashboard = () => {
                     <Spinner />{" "}
                   </span>
                 ) : (
-                  requests.data?.length
+                  requests?.length
                 )}
               </span>
               <span className="text-secondary-500 text-sm bg-secondary-100 px-2 py-1 rounded">
@@ -138,10 +141,10 @@ const Dashboard = () => {
           </h3>
           <div>
             <p className="text-sm mb-4 text-primary-700 ">
-              Total de {requests.data?.length} demandes
+              Total de {requests?.length} demandes
             </p>
             <div className="space-y-4">
-              <ListDemande demandes={requests.data} />
+              <ListDemande demandes={requests} />
             </div>
           </div>
         </div>

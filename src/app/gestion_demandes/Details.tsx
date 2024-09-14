@@ -1,28 +1,31 @@
-import DetailDemande from "../../components/demandes/DetailDemande"
-import {useNavigate} from "react-router-dom";
-
-const details = {
-    "prenom": "Aminata",
-    "nom": "Ndiaye",
-    "sexe": "Masculin",
-    "date_de_naissance": "12/12/1990",
-    "nationalite": "Sénégalaise",
-    "pays_de_naissance": "Sénégal",
-    "lieu_de_naissance": "Zac mbao, cité des forces françaises du cap vert",
-    "situation_matrimoniale": "Marié(e)",
-    "numero_dossier": "#090890",
-    "date_de_depot": "12/12/1990",
-    "piece": ["Carte d'identité", "Carte de sécurité", "Passeport", "Permis de conduire"],
-    // "status": "Traité"
-    // "status":"Rejeté"
-    // "status":"Confirmé"
-  "status":"En attente"
-}
-
-
+import { useQuery } from "@tanstack/react-query";
+import DetailDemande from "../../components/demandes/DetailDemande";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { BASE_URL } from "../../constants";
+import Spinner from "../../components/Spinner";
 
 export default function Details() {
+  const { id } = useParams();
   const navigate = useNavigate();
+
+  const getRequest = async (id: string | undefined) => {
+    const response = await axios.get(`${BASE_URL}/requests/${id}`);
+    return response.data.data;
+  };
+
+  const { data: request, isLoading: isLoadingOnFetchingRequest } = useQuery({
+    queryKey: ["request", id],
+    queryFn: () => getRequest(id),
+  });
+
+  if (isLoadingOnFetchingRequest)
+    return (
+      <div className="h-full min-h-[300px] w-full flex justify-center items-center">
+        {" "}
+        <Spinner />{" "}
+      </div>
+    );
 
   return (
     <div>
@@ -30,25 +33,15 @@ export default function Details() {
       <button
         className="h-8 px-4 mb-4 text-sm text-indigo-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800"
         type="button"
-        onClick={() => {navigate(-1);}}
+        onClick={() => {
+          navigate(-1);
+        }}
       >
         Retour
       </button>
 
       {/* Display the details of the demand */}
-      <DetailDemande
-        prenom={details.prenom}
-        nom={details.nom}
-        sexe={details.sexe}
-        date_de_naissance={details.date_de_naissance}
-        nationalite={details.nationalite}
-        pays_de_naissance={details.pays_de_naissance}
-        lieu_de_naissance={details.lieu_de_naissance}
-        situation_matrimoniale={details.situation_matrimoniale}
-        numero_dossier={details.numero_dossier}
-        date_de_depot={details.date_de_depot}
-        pieces={details.piece}
-        status={details.status}/>
+      <DetailDemande demande={request} />
     </div>
-  )
+  );
 }
