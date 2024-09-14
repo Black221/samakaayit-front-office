@@ -12,11 +12,13 @@ import { ModalProvider } from "./providers/ModalProvider.tsx";
 import AuthGuard from "./guards/AuthGuard.tsx";
 import IsAuth from "./guards/isAuth";
 
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <MainProvider>
       <AuthProvider>
         <ModalProvider>
+
           <BrowserRouter>
             <Routes>
               <Route element={<IsAuth />}>

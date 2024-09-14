@@ -4,9 +4,10 @@ import LoggedInUserImage from "../assets/userImage.png";
 import dashboardIcon from "../assets/dashboard-icon-light.svg";
 import demandeIcon from "../assets/demande-icon-light.svg";
 import messagerieIcon from "../assets/message-icon-light.svg";
-import statistiqueIcon from "../assets/statistiques-icon-light.svg";
 import parametreIcon from "../assets/setting-icon-light.svg";
 import logoutIcon from "../assets/logout-icon-light.svg";
+import rvIcon from "../assets/rv-icon-light.svg";
+import { useAuth } from "../hooks/useAuth";
 
 const navigation = [
   {
@@ -22,8 +23,8 @@ const navigation = [
     icon: messagerieIcon,
   },
   {
-    route: "/statistiques",
-    icon: statistiqueIcon,
+    route: "/rendez-vous",
+    icon: rvIcon,
   },
   {
     route: "/parametres",
@@ -32,6 +33,8 @@ const navigation = [
 ];
 
 const Sidebar = () => {
+  const { logout } = useAuth();
+
   return (
     <div className="flex flex-col h-[95vh] w-15 bg-primary-700 p-4 space-y-6 rounded-3xl fixed left-4 top-1/2 transform -translate-y-1/2 shadow-lg">
       <div className="flex justify-center mb-6">
@@ -54,6 +57,7 @@ const Sidebar = () => {
       </nav>
       <div className="mt-8 flex justify-center">
         <NavLink
+          onClick={logout}
           to="/connexion"
           className="text-white p-2 hover:bg-green-500 rounded-full"
         >

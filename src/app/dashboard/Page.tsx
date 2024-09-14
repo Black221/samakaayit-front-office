@@ -3,6 +3,10 @@ import RVList from "../../components/rendez_vous/RVList";
 import ListDemande from "../../components/demandes/ListDemande";
 import MessageList from "../../components/messagerie/MessageList";
 import LoggedInUserImage from "../../assets/userImage.png";
+import { Demande } from "../../types/models";
+import Spinner from "../../components/Spinner";
+import useFetchAllRequests from "../../hooks/useFetchAllResquests";
+import { BASE_URL } from "../../constants";
 
 const RVs = [
   {
@@ -19,21 +23,6 @@ const RVs = [
     name: "Anta Bintou Ndoye",
     time: "10:00",
     colorClass: "bg-red-500",
-  },
-];
-
-const Demandes = [
-  {
-    name: "Mari Maty",
-    date: "24-08-2024",
-    numDossier: "#090887",
-    status: "Confirmé",
-  },
-  {
-    name: "Madiop Sa Mame",
-    date: "25-08-2024",
-    numDossier: "#090887",
-    status: "Traité",
   },
 ];
 
@@ -61,6 +50,18 @@ const Messages = [
 ];
 
 const Dashboard = () => {
+  let url = `${BASE_URL}/requests`;
+  const { isLoadingOnFetchingRequestsList, requests } =
+    useFetchAllRequests(url);
+
+  const numberOfRequestProcessed = requests?.filter(
+    (demande: Demande) => demande.state === "terminé"
+  ).length;
+  const percentageOfRequestProcessed =
+    (requests?.filter((demande: Demande) => demande.state === "terminé")
+      .length /
+      requests?.length) *
+    100;
   return (
     <div className="grid grid-cols-12 gap-6">
       {/* Colonne principale (gauche) */}
@@ -71,26 +72,35 @@ const Dashboard = () => {
               Nombre total de demandes
             </h3>
             <div className="flex items-center space-x-2">
-              <span className="text-ns font-medium">6300</span>
+              <span className="text-ns font-medium">
+                {isLoadingOnFetchingRequestsList ? (
+                  <span className="h-full min-h-[300px] w-full flex justify-center items-center">
+                    {" "}
+                    <Spinner />{" "}
+                  </span>
+                ) : (
+                  requests?.length
+                )}
+              </span>
               <span className="text-secondary-500 text-sm bg-secondary-100 px-2 py-1 rounded">
                 ↑ 1.2%
               </span>
             </div>
 
             <div className="mt-2">
-              <p className="text-tertiary-1000">Demande du dernier mois</p>
+              <p className="text-tertiary-1000">Demandes du dernier mois</p>
               <div className="relative pt-1 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-semibold">
-                    250 demandes traitées
+                    {numberOfRequestProcessed} demande(s) traitée(s)
                   </span>
                   <span className="text-sm font-semibold text-tertiary-1000">
-                    25%
+                    {percentageOfRequestProcessed}%
                   </span>
                 </div>
                 <div className="overflow-hidden h-4 mb-4 text-xs flex rounded-xl bg-primary-100">
                   <div
-                    style={{ width: "25%" }}
+                    style={{ width: `${percentageOfRequestProcessed}%` }}
                     className="shadow-none flex flex-col rounded-xl text-center whitespace-nowrap text-white justify-center bg-primary-700"
                   ></div>
                 </div>
@@ -131,10 +141,10 @@ const Dashboard = () => {
           </h3>
           <div>
             <p className="text-sm mb-4 text-primary-700 ">
-              Total de 1250 demandes
+              Total de {requests?.length} demandes
             </p>
             <div className="space-y-4">
-              <ListDemande demandes={Demandes} />
+              <ListDemande demandes={requests} />
             </div>
           </div>
         </div>

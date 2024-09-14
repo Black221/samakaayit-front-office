@@ -5,10 +5,15 @@ import Dashboard from "./dashboard/Page";
 import { useMainState } from "../hooks/useMainState";
 import { useEffect } from "react";
 import Demandes from "./gestion_demandes/Page";
+import Profil from "./profil/Page";
+import Messagerie from "./messagerie/Page";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RequestsProvider } from "../providers/RequestsProvider";
 import Messagerie from "./messagerie/Page";
 
 function App() {
   const { setScreenSize, setLargeScreen } = useMainState();
+  const queryClient = new QueryClient();
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,15 +29,20 @@ function App() {
   });
 
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/demandes/*" element={<Demandes />} />
-        <Route path="/messagerie" element={<Messagerie />} />
-        <Route path="/statistiques" element={<div>Statistiques</div>} />
-        <Route path="/parametres" element={<div>Paramètres</div>} />
-      </Route>
-    </Routes>
+    <QueryClientProvider client={queryClient}>
+      <RequestsProvider>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/demandes/*" element={<Demandes />} />
+            <Route path="/messagerie" element={<Messagerie />} />
+            <Route path="/rendez-vous" element={<div>Rendez-vous</div>} />
+            <Route path="/parametres" element={<Profil />} />
+          </Route>
+        </Routes>
+      </RequestsProvider>
+    </QueryClientProvider>
+
   );
 }
 

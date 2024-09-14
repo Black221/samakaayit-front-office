@@ -1,35 +1,43 @@
 import idCard from "../../assets/id-card.png";
-import { DemandeModel } from "../../types/models";
+import { Demande } from "../../types/models";
+import { getDateOfTypeStringInFrench } from "../../utils";
 
 interface DemandeItemProps {
-  demande: DemandeModel,
-  onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  demande: Demande;
+  onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-const STATUS_COLOR: { [key: string]: string } = {
-  "En attente": "bg-[#EAEAEA]",
-  Confirmé: "bg-[#DFFFEA]",
-  Traité: "bg-[#FFFAC2]",
-  "Cas complexe": "bg-[#F0CBB8]",
+const STATUS_COLOR: { [key: string]: string | undefined } = {
+  "en-cours": "bg-[#EAEAEA]",
+  confirmé: "bg-[#DFFFEA]",
+  terminé: "bg-[#FFFAC2]",
+  rejeté: "bg-[#F0CBB8]",
 };
 
 const DemandeItem = ({ demande, onClick }: DemandeItemProps) => {
   return (
-    <button onClick={onClick} className="flex flex-row items-center justify-between w-full py-[10px]">
+    <button
+      onClick={onClick}
+      className="flex flex-row items-center justify-between w-full py-[10px]"
+    >
       <img src={idCard} alt="id-card" className="w-6 h-6 mr-[16px]" />
 
       <div className="flex flex-col items-start">
-        <h3 className="text-sm font-bold">{demande.name}</h3>
-        <p className="text-xs font-bold">N° de dossier: {demande.numDossier}</p>
-        <p className="text-xs font-bold">Date de dépot : {demande.date}</p>
+        <h3 className="text-sm font-bold">
+          {demande?.citoyen?.name} {demande?.citoyen?.surname}
+        </h3>
+        <p className="text-xs font-bold">
+          Date de dépot :{" "}
+          {getDateOfTypeStringInFrench(demande?.dateAndHourTreatment)}
+        </p>
       </div>
       <div className="flex-1"></div>
       <span
         className={`rounded-[3px] px-3 text-black font-medium text-sm ${
-          STATUS_COLOR[demande.status]
+          STATUS_COLOR[demande?.state]
         }`}
       >
-        {demande.status}
+        {demande?.state}
       </span>
 
       {/* ckeckbox */}

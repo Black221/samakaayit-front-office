@@ -6,7 +6,6 @@ const Layout = () => {
   return (
     <div className="flex flex-col h-screen">
       <StatusTabs />
-
       <div className="flex flex-1">
         <ServiceSelection />
         <div className="flex-1 px-6 overflow-auto">
