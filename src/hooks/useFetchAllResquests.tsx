@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { BASE_URL } from "../constants";
 
-export default function useFetchAllRequests(url: string) {
+export default function useFetchAllRequests() {
 
   const getAllRequests = async () => {
-    const response = await axios.get(url);
-    return response.data;
+    const response = await axios.get(BASE_URL + "/requests");
+    return response.data.data;
   };
   const {
     isLoading: isLoadingOnFetchingRequestsList,
@@ -13,7 +14,7 @@ export default function useFetchAllRequests(url: string) {
     data: requests = [],
     error,
   } = useQuery({
-    queryKey: ["requests", url],
+    queryKey: ["requests"],
     queryFn: getAllRequests,
   });
 

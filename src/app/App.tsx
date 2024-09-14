@@ -8,6 +8,7 @@ import Demandes from "./gestion_demandes/Page";
 import Profil from "./profil/Page";
 import Messagerie from "./messagerie/Page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RequestsProvider } from "../providers/RequestsProvider";
 
 function App() {
   const { setScreenSize, setLargeScreen } = useMainState();
@@ -28,15 +29,17 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/demandes/*" element={<Demandes />} />
-          <Route path="/messagerie" element={<Messagerie />} />
-          <Route path="/rendez-vous" element={<div>Rendez-vous</div>} />
-          <Route path="/parametres" element={<Profil />} />
-        </Route>
-      </Routes>
+      <RequestsProvider>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/demandes/*" element={<Demandes />} />
+            <Route path="/messagerie" element={<Messagerie />} />
+            <Route path="/rendez-vous" element={<div>Rendez-vous</div>} />
+            <Route path="/parametres" element={<Profil />} />
+          </Route>
+        </Routes>
+      </RequestsProvider>
     </QueryClientProvider>
   );
 }

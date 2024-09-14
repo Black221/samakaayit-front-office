@@ -5,7 +5,8 @@ import DemandeItem from "./DemandeItem";
 interface ListDemandeProps {
   demandes: Demande[];
   onClick?: React.MouseEventHandler<HTMLButtonElement> | undefined;
-  status?: "en-cours" | "confirmé" | "terminé" | "rejeté";
+  // status?: "en-cours" | "confirmé" | "terminé" | "rejeté";
+  status?: string;
 }
 
 export default function ListDemande({

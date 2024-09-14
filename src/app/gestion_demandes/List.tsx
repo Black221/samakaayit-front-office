@@ -1,52 +1,53 @@
 import { useParams } from "react-router-dom";
 import ListDemande from "../../components/demandes/ListDemande";
-import Spinner from "../../components/Spinner";
-import { BASE_URL } from "../../constants";
-import useFetchAllRequests from "../../hooks/useFetchAllResquests";
+// import useFetchAllRequests from "../../hooks/useFetchAllResquests";
 import { useMainState } from "../../hooks/useMainState";
 import emptyfolder from "../../assets/empty-folder.svg";
+import { useRequests } from "../../providers/RequestsProvider";
+import { useEffect, useState } from "react";
+import useFetchAllRequests from "../../hooks/useFetchAllResquests";
+
+
+const Skeleton = () => {
+  return (
+    <div className="rounded-lg w-full">
+      <div className="animate-pulse h-10 w-full rounded-lg">
+        <div className="bg-neutral-50 h-full w-full rounded-lg flex items-center">
+            <div className="flex items-center justify-between gap-4 w-full px-2">
+              <div className="bg-neutral-200 h-5 w-5 rounded-lg"></div>
+              <div className="bg-neutral-50 w-1/3 rounded-lg mr-auto">
+                  <div className="bg-neutral-200 h-2 rounded-lg mb-2"></div>
+                  <div className="bg-neutral-200 h-1 w-full rounded-lg"></div>
+              </div>
+              <div className="bg-neutral-200 h-4 w-20 rounded-sm"></div>
+            </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
 export default function List() {
-  let { serviceId } = useParams();
-  const { activeStatus, setActiveStatus } = useMainState();
-  
-  let url = `${BASE_URL}/requests`;
+  const { activeStatus } = useMainState();
+  const { request, setRequest } = useRequests();
+  const { isLoadingOnFetchingRequestsList, requests } = useFetchAllRequests();
 
-  if (serviceId !== undefined) {
-    url = `${BASE_URL}/requests/service/${serviceId}/fonctionnaire/66e03f39c99206104c170ff9`;
-  }
+  useEffect(() => {
+    setRequest(requests);
+  }, [requests]);
 
-  if (activeStatus && serviceId) {
-    switch (activeStatus) {
-      case "En cours":
-        url = `${BASE_URL}/requests/service/${serviceId}/fonctionnaire/66e03f39c99206104c170ff9?status=en-cours`;
-        break;
-      case "Confirmé":
-        url = `${BASE_URL}/requests/service/${serviceId}/fonctionnaire/66e03f39c99206104c170ff9?status=confirmé`;
-        break;
-      case "Rejeté":
-        url = `${BASE_URL}/requests/service/${serviceId}/fonctionnaire/66e03f39c99206104c170ff9?status=rejeté`;
-        break;
-      case "Terminé":
-        url = `${BASE_URL}/requests/service/${serviceId}/fonctionnaire/66e03f39c99206104c170ff9?status=terminé`;
-        break;
-    }
-  }
-
-
-  const { isLoadingOnFetchingRequestsList, requests } = useFetchAllRequests(url);
-console.log(requests);
   if (isLoadingOnFetchingRequestsList)
     return (
-      <div className="h-full min-h-[300px] w-full flex justify-center items-center">
-        {" "}
-        <Spinner />{" "}
+      <div className="h-full min-h-[300px] flex-col gap-y-4 w-full flex">
+        {Array(10).fill(0).map((_, i) => <Skeleton key={i} />)}
       </div>
     );
 
   return (
     <div className="flex flex-col justify-between h-full w-full">
       {
-        !requests.data || requests.data.length === 0 ?
+        !request || request.length === 0 ?
         <div className="flex flex-col items-center w-full h-full">
           <img src={emptyfolder}  alt="empty folder" className="w-16 h-16 mt-32 text-gray-200" />
           <p className="text-center text-gray-800 text-xl">
@@ -55,7 +56,7 @@ console.log(requests);
         </div>
         :
         <>
-          <ListDemande demandes={requests.data} />
+          <ListDemande status={activeStatus ? activeStatus : ""} demandes={request} />
           <div className="flex justify-end items-center">
             <a
               href="/demandes"
