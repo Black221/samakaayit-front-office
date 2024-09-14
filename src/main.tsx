@@ -11,24 +11,27 @@ import { ModalProvider } from "./providers/ModalProvider.tsx";
 
 import AuthGuard from "./guards/AuthGuard.tsx";
 import IsAuth from "./guards/isAuth";
-import { RequestsProvider } from "./providers/RequestsProvider.tsx";
+
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <MainProvider>
       <AuthProvider>
         <ModalProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route element={<IsAuth />}>
-                  <Route path={"/connexion"} element={<Login />} />
-                </Route>
-                <Route path="/inscription" element={<Register />} />
-                <Route element={<AuthGuard />}>
-                  <Route path="/*" element={<App />} />
-                </Route>
-              </Routes>
-            </BrowserRouter>
+
+          <BrowserRouter>
+            <Routes>
+              <Route element={<IsAuth />}>
+                <Route path={"/connexion"} element={<Login />} />
+              </Route>
+
+              <Route path="/inscription" element={<Register />} />
+
+              <Route element={<AuthGuard />}>
+                <Route path="/*" element={<App />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
         </ModalProvider>
       </AuthProvider>
     </MainProvider>
