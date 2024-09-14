@@ -6,6 +6,7 @@ import emptyfolder from "../../assets/empty-folder.svg";
 import { useRequests } from "../../providers/RequestsProvider";
 import { useEffect, useState } from "react";
 import useFetchAllRequests from "../../hooks/useFetchAllResquests";
+import { BASE_URL } from "../../constants";
 
 
 const Skeleton = () => {
@@ -30,12 +31,16 @@ const Skeleton = () => {
 
 export default function List() {
   const { activeStatus } = useMainState();
-  const { request, setRequest } = useRequests();
-  const { isLoadingOnFetchingRequestsList, requests } = useFetchAllRequests();
+  const {serviceID} = useParams();
+  const fonctionnaireID = "66e03f39c99206104c170ff9";
+  const institutionID = "66d35e3ef926f5b2a2fd0b45";
 
-  useEffect(() => {
-    setRequest(requests);
-  }, [requests]);
+  let url = "";
+  serviceID !== undefined ?
+    url = BASE_URL + "/requests/service/" + serviceID + "/fonctionnaire/" + fonctionnaireID :
+    url = BASE_URL + "/requests/institution/" + institutionID;
+
+  const { isLoadingOnFetchingRequestsList, requests } = useFetchAllRequests(url);
 
   if (isLoadingOnFetchingRequestsList)
     return (
@@ -47,7 +52,7 @@ export default function List() {
   return (
     <div className="flex flex-col justify-between h-full w-full">
       {
-        !request || request.length === 0 ?
+        !requests || requests.length === 0 ?
         <div className="flex flex-col items-center w-full h-full">
           <img src={emptyfolder}  alt="empty folder" className="w-16 h-16 mt-32 text-gray-200" />
           <p className="text-center text-gray-800 text-xl">
@@ -56,7 +61,7 @@ export default function List() {
         </div>
         :
         <>
-          <ListDemande status={activeStatus ? activeStatus : ""} demandes={request} />
+          <ListDemande status={activeStatus ? activeStatus : ""} demandes={requests} />
           <div className="flex justify-end items-center">
             <a
               href="/demandes"

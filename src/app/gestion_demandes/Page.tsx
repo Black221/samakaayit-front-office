@@ -9,7 +9,7 @@ function Demandes() {
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<List />} />
-        <Route path="services/:serviceId" element={<List />} />
+        <Route path="services/:serviceID" element={<List />} />
         <Route path="details/:id" element={<Details />} />
       </Route>
     </Routes>
