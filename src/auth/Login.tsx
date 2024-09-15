@@ -39,7 +39,7 @@ function Input({id, label, type="text", onChange, placeholder, leftImage, rightB
 
 export default function Login() {
 
-    const [message, setMessage] = useState<string>("");
+    // const [message, setMessage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [cni, setCni] = useState<string>("");
     const [password, setPassword] = useState<string>("");
