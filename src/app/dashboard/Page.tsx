@@ -7,24 +7,8 @@ import { Demande } from "../../types/models";
 import Spinner from "../../components/Spinner";
 import useFetchAllRequests from "../../hooks/useFetchAllResquests";
 import { BASE_URL } from "../../constants";
-
-const RVs = [
-  {
-    name: "Binta Aminata Ndoye",
-    time: "08:30",
-    colorClass: "bg-green-500",
-  },
-  {
-    name: "Pathe Ndiaye",
-    time: "10:00",
-    colorClass: "bg-green-500",
-  },
-  {
-    name: "Anta Bintou Ndoye",
-    time: "10:00",
-    colorClass: "bg-red-500",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const Messages = [
   {
@@ -51,8 +35,19 @@ const Messages = [
 
 const Dashboard = () => {
   let url = `${BASE_URL}/requests`;
+
+  const getRendezVous = async () => {
+    const response = await axios.get(`${BASE_URL}/rendezvous`);
+    return response.data.data;
+  };
+
   const { isLoadingOnFetchingRequestsList, requests } =
     useFetchAllRequests(url);
+  const { data: rendezVous, isLoading: isLoadingOnFetchingRendezVous } =
+    useQuery({
+      queryKey: ["RendezVous"],
+      queryFn: getRendezVous,
+    });
 
   const numberOfRequestProcessed = requests?.filter(
     (demande: Demande) => demande.state === "terminé"
@@ -168,7 +163,14 @@ const Dashboard = () => {
             Rendez-vous
           </h3>
           <div className="space-y-4">
-            <RVList RVs={RVs} />
+            {isLoadingOnFetchingRendezVous ? (
+              <span className="h-full min-h-[300px] w-full flex justify-center items-center">
+                {" "}
+                <Spinner />{" "}
+              </span>
+            ) : (
+              <RVList RVs={rendezVous} />
+            )}
           </div>
         </div>
       </div>

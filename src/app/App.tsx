@@ -9,7 +9,6 @@ import Profil from "./profil/Page";
 import Messagerie from "./messagerie/Page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RequestsProvider } from "../providers/RequestsProvider";
-import Messagerie from "./messagerie/Page";
 
 function App() {
   const { setScreenSize, setLargeScreen } = useMainState();
@@ -42,7 +41,6 @@ function App() {
         </Routes>
       </RequestsProvider>
     </QueryClientProvider>
-
   );
 }
 

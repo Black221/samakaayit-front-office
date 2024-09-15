@@ -1,15 +1,10 @@
 import { useMainState } from "../hooks/useMainState";
-import { useRequests } from "../providers/RequestsProvider";
 
 const StatusTabs = () => {
   const tabs: any = [
     {
       label: "En cours",
       value: "en-cours",
-    },
-    {
-      label: "Traité",
-      value: "traité",
     },
     {
       label: "Rejeté",
@@ -20,17 +15,12 @@ const StatusTabs = () => {
       value: "terminé",
     },
     {
-      label: "Complexe",
-      value: "complexe",
-    },
-    {
       label: "Confirmé",
       value: "confirmé",
     },
-];
+  ];
 
   const { activeStatus, setActiveStatus } = useMainState();
-  const { filterByStatus } = useRequests();
 
   return (
     <div className="flex space-x-8  mb-6">

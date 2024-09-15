@@ -36,8 +36,8 @@ function getRandomColor(): string {
   return backgroundColors[randomIndex];
 }
 
-function capitalizeFirstLetter(str: string) {
-  return str.charAt(0).toUpperCase();
+function capitalizeFirstLetter(str: string | undefined) {
+  return str?.charAt(0).toUpperCase();
 }
 
 const getDateinFrench = (date: Date) => {
@@ -62,9 +62,21 @@ const getDateOfTypeStringInFrench = (date: string | undefined) => {
   }
 };
 
+const getTimeFromDate = (date: string | undefined) => {
+  if (date) {
+    const hours = new Date(date).getUTCHours();
+    const minutes = new Date(date).getUTCMinutes();
+
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
+  }
+};
+
 export {
   getRandomColor,
   capitalizeFirstLetter,
   getDateOfTypeStringInFrench,
   getDateinFrench,
+  getTimeFromDate,
 };

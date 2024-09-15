@@ -4,9 +4,19 @@ export type UserModel = {
   role: string;
 };
 
-export type RVModel = {
-  name: string;
-  time: string;
+export type RendezVous = {
+  _id: string;
+  citoyen: Citoyen;
+  institution: Institution;
+  dateAndHour: string;
+  duration: number;
+  state: string;
+  priority: string;
+  type: string;
+  comment: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 };
 
 export type Demande = {
