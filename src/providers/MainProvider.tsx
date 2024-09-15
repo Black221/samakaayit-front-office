@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createContext, ReactNode, useState } from "react";
 
 interface Obj {
@@ -54,7 +53,7 @@ export const MainContext = createContext<{
 export const MainProvider = ({ children }: { children: ReactNode }) => {
   const [search, setSearch] = useState<string>("");
   const [sidebar, setSidebar] = useState<string>("");
-  const [activeStatus, setActiveStatus] = useState<string>("En attente");
+  const [activeStatus, setActiveStatus] = useState<string>("en-cours");
 
   const [screenSize, setScreenSize] = useState<number>(0);
   const [largeScreen, setLargeScreen] = useState<boolean>(false);

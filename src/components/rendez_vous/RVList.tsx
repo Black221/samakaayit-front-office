@@ -1,8 +1,8 @@
-import { RVModel } from "../../types/models";
+import { RendezVous } from "../../types/models";
 import RVItem from "./RVItem";
 
 interface RVListProps {
-  RVs: RVModel[];
+  RVs: RendezVous[];
 }
 
 export default function RVList({ RVs }: RVListProps) {

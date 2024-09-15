@@ -9,7 +9,7 @@ import eye from "../assets/eye.svg";
 import eye2 from "../assets/eye-slash.svg";
 import idcard from "../assets/id-card.png";
 import { Toaster, toast } from 'sonner'
-import Joi from "joi";
+// import Joi from "joi";
 import { schemas } from "../utils/validation-shemas";
 
 interface IputProps {
@@ -41,10 +41,8 @@ export default function Login() {
 
     const [message, setMessage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
-
     const [cni, setCni] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-
     const [type, setType] = useState('password');
 
     const { login } = useAuth();
@@ -53,7 +51,7 @@ export default function Login() {
     const handleToggle = () => type === 'password' ? setType('text') : setType('password');
     
 
-    const onSubmit = (e: any) => {
+    const onSubmit = async (e: any) => {
         e.preventDefault();
         setLoading(true);
         try {
@@ -64,31 +62,29 @@ export default function Login() {
         
             const { value, error } = schemas.loginSchema.validate(body);
             console.log(value, error);
-            if (error) throw new Error("Invalid login or password");
+            if (error) throw new Error("Veuillez remplir correctement les champs!");
             const user = USERS_TEST.find(user => user.cni === cni && user.password === password);
+            console.log("User", user);
             if (user) {
-                setMessage("");
                 login({
                     id: user.id,
                     email: user.cni,
                     role: user.role
                 });
                 setLoading(false);
-                navigate("/app");
+                navigate("/");
             } else {
-                setMessage("CNI ou mot de passe incorrect");
-                toast.error(message);
+                toast.error("CNI ou mot de passe incorrect!");
                 setLoading(false);
-            
             }
 
         } catch (error:any) {
-            setMessage("Champs invalides");
-            toast.error(message);
+            toast.error(error.message);
         } finally {
             setLoading(false);
         }
     }
+    
 
 
 
@@ -167,6 +163,12 @@ const USERS_TEST = [
         id: "2",
         cni: "108819901011",
         password: "user",
+        role: "user"
+    },
+     {
+        id: "2",
+        cni: "0000",
+        password: "test",
         role: "user"
     }
 ]

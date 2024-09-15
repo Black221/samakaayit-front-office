@@ -1,8 +1,9 @@
 import { getRandomColor, capitalizeFirstLetter } from "../../utils";
-import { RVModel } from "../../types/models";
+import { RendezVous } from "../../types/models";
+import { getTimeFromDate } from "../../utils";
 
 interface RVProps {
-  rv: RVModel;
+  rv: RendezVous;
 }
 
 export default function RVItem({ rv }: RVProps) {
@@ -14,14 +15,18 @@ export default function RVItem({ rv }: RVProps) {
         <div
           className={`h-10 w-10 rounded-full flex items-center justify-center text-white ${randomColor}`}
         >
-          {capitalizeFirstLetter(rv.name)}
+          {capitalizeFirstLetter(rv?.citoyen?.name)}
         </div>
 
         <div className="ml-4">
-          <h4 className="font-medium">{rv.name}</h4>
+          <h4 className="font-medium">
+            {rv?.citoyen.name} {rv?.citoyen?.surname}
+          </h4>
         </div>
       </div>
-      <span className="text-sm text-gray-500">{rv.time}</span>
+      <span className="text-sm text-gray-500">
+        {getTimeFromDate(rv?.dateAndHour)}
+      </span>
     </div>
   );
 }
