@@ -1,4 +1,6 @@
 import { Demande } from "../../types/models";
+import { PDFViewer } from "@react-pdf/renderer";
+import DocumentResponse from "./DocumentResponse";
 
 interface DetailDemandeProps {
   demande: Demande;
@@ -151,6 +153,13 @@ const DetailDemande = ({ demande }: DetailDemandeProps) => {
         </svg>
         <span className="font-semibold">Ouvrir le fichier</span>
       </button>
+      {demande.state === "terminé" && (
+        <div className="mt-4 mb-4">
+          <PDFViewer width={700} height={700}>
+            <DocumentResponse />
+          </PDFViewer>
+        </div>
+      )}
     </div>
   );
 };
