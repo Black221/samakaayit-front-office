@@ -11,6 +11,8 @@ import idcard from "../assets/id-card.png";
 import { Toaster, toast } from 'sonner'
 // import Joi from "joi";
 import { schemas } from "../utils/validation-shemas";
+import axios from "axios";
+import { BASE_URL } from "../constants";
 
 interface IputProps {
     label: string;
@@ -28,7 +30,7 @@ function Input({id, label, type="text", onChange, placeholder, leftImage, rightB
             <label htmlFor={id} className="block text-base font-medium text-black mb-2">{label} </label>
             <div className="relative flex items-center mb-1">
                 {leftImage}
-                <input className="w-full px-8 outline-none text-lg bg-white" type={type} id={id} onChange={onChange} placeholder={placeholder}  autoComplete="off"/>
+                <input className="w-full px-8 outline-none text-lg bg-white" type={type} id={id} onChange={onChange} placeholder={placeholder}  autoComplete="off" required/>
                 {rightButton}
             </div>
         </div>
@@ -42,6 +44,7 @@ export default function Login() {
     // const [message, setMessage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [cni, setCni] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [type, setType] = useState('password');
 
@@ -49,28 +52,22 @@ export default function Login() {
     const navigate = useNavigate();
 
     const handleToggle = () => type === 'password' ? setType('text') : setType('password');
-    
 
     const onSubmit = async (e: any) => {
         e.preventDefault();
         setLoading(true);
         try {
             const body = {
-                cni,
+                email,
                 password
             };
-        
             const { value, error } = schemas.loginSchema.validate(body);
-            console.log(value, error);
             if (error) throw new Error("Veuillez remplir correctement les champs!");
-            const user = USERS_TEST.find(user => user.cni === cni && user.password === password);
-            console.log("User", user);
+            const url = `${BASE_URL}/fonctionnaires/auth/login`;
+            const response = await axios.post(url, value);
+            const user =  await response.data;
             if (user) {
-                login({
-                    id: user.id,
-                    email: user.cni,
-                    role: user.role
-                });
+                login({...user.result.fonctionnaire});
                 setLoading(false);
                 navigate("/");
             } else {
@@ -79,12 +76,13 @@ export default function Login() {
             }
 
         } catch (error:any) {
-            toast.error(error.message);
+            // toast.error(error.message);
+            toast.error("Erreur! Veuillez vérifier les informations saisies.");
         } finally {
             setLoading(false);
         }
     }
-    
+
 
 
 
@@ -102,13 +100,12 @@ export default function Login() {
             <div className="w-1/2">
                 <form className="w-[429px] mx-auto mt-[112px] flex flex-col" onSubmit={onSubmit} >
                     <h1 className="font-heading text-center text-black font-semibold text-[36px]/[45px] "> Connexion </h1>
-                   
                     <div className="mt-[117px]">
                        <div className="flex flex-col gap-8">
                             <Input
                                 label="Numéro de la carte d'indentité"
-                                type="text" placeholder="CNI"
-                                onChange={(e:any) => setCni(e.target.value)} id="CNI"
+                                type="email" placeholder="Email"
+                                onChange={(e:any) => setEmail(e.target.value)} id="Email"
                                 leftImage={<img src={idcard} alt="padlock"className="h-[16px] w-[16px] absolute left-0" />}
                             />
     
@@ -130,19 +127,8 @@ export default function Login() {
                                     </svg>
                             ) : <span className="text-white">Se connecter</span>
                         } disabled={loading} />
-                      
-                        {/* toaster */}
-                        {/* Custom toast */}
-                        {/* {toast.custom((t) => (
-                            <div>
-                                <h1>{message}</h1>
-                                <button onClick={() => toast.dismiss(t)}>Dismiss</button>
-                            </div>
-                        ))} */}
                         <Toaster richColors position="top-center" />
-                        
                     </div>
-                     
                 </form>
             </div>
         </div>

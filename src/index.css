@@ -12,7 +12,6 @@
 }
 
 
-
 .container {
     --uib-size: 40px;
     --uib-color: black;
@@ -93,4 +92,3 @@
         transform: rotate(360deg);
     }
 }
-

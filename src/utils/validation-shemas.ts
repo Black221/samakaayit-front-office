@@ -2,8 +2,10 @@ import Joi from 'joi';
 
 const schemas = {
   loginSchema: Joi.object().keys({
-    cni: Joi.string().required(),
-    password: Joi.string().alphanum().required(),
+    cni: Joi.string(),
+    email: Joi.string().required(),
+    password: Joi.string().required(),
+
   }),
 
   // define all the other schemas below
