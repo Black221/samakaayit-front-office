@@ -1,5 +1,4 @@
 import profilebg from '../../assets/profilebg.png'
-// import calendar from '../../assets/calendar.svg'
 import sms from '../../assets/sms.svg'
 import location from '../../assets/location.svg'
 
@@ -53,10 +52,9 @@ function Profil() {
       </section>
 
       {/* User profile */}
-      <section className='flex flex-col xl:flex-row'>
-
+      <section className='flex flex-col xl:flex-row flex-nowrap'>
         <div className='flex-1 mb-8 xl:mb-0 xl:mr-10'>
-          <div className='flex flex-col xl:flex-row gap-[36px]'>
+          <div className='flex flex-col xl:flex-row gap-[36px] flex-nowrap'>
             <div className='flex-1 mb-8 xl:mb-0'>
               <h3 className='text-xl font-semibold mb-8'>Informations personnelles</h3>
               <form className='grid lg:grid-cols-2 grid-cols-1 gap-x-[36px] gap-y-3'>
