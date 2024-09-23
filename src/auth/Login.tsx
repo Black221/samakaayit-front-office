@@ -103,7 +103,8 @@ export default function Login() {
                     <div className="mt-[117px]">
                        <div className="flex flex-col gap-8">
                             <Input
-                                label="Numéro de la carte d'indentité"
+                                // label="Numéro de la carte d'indentité"
+                                label="Email"
                                 type="email" placeholder="Email"
                                 onChange={(e:any) => setEmail(e.target.value)} id="Email"
                                 leftImage={<img src={idcard} alt="padlock"className="h-[16px] w-[16px] absolute left-0" />}

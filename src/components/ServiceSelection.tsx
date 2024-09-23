@@ -2,6 +2,7 @@ import { BASE_URL } from "../constants";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 // const Skeleton = () => {
 //   return (
@@ -18,9 +19,11 @@ import { NavLink } from "react-router-dom";
 
 const ServiceSelection = () => {
   // const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const user = useLocalStorage('user');
 
   const getAllServices = async () => {
-    const response = await axios.get(BASE_URL + "/services/byInstitution/66d374377bc1913f767e4458");
+    // const response = await axios.get(BASE_URL + "/services/byInstitution/66d374377bc1913f767e4458");
+    const response = await axios.get(BASE_URL + `/services/byInstitution/${user?.institution._id}`)
     return response.data.data;
   };
 

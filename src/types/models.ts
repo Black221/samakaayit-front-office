@@ -1,7 +1,17 @@
 export type UserModel = {
-  id: string;
+  id?: string;
+  role?: string;
   email: string;
-  role: string;
+  _id: string;
+  CNI: string;
+  phoneNumber: string;
+  name: string;
+  surname: string;
+  birthDate: string;
+  job: string;
+  sex?: 'M' | 'F';
+  idNumber: string;
+  institution: Institution;
 };
 
 export type RendezVous = {
