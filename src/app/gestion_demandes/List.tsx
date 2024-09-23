@@ -5,6 +5,7 @@ import { useMainState } from "../../hooks/useMainState";
 import emptyfolder from "../../assets/empty-folder.svg";
 import useFetchAllRequests from "../../hooks/useFetchAllResquests";
 import { BASE_URL } from "../../constants";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const Skeleton = () => {
   return (
@@ -28,8 +29,9 @@ const Skeleton = () => {
 export default function List() {
   const { activeStatus } = useMainState();
   const { serviceID } = useParams();
-  const fonctionnaireID = "66e03f39c99206104c170ff9";
-  const institutionID = "66d35e3ef926f5b2a2fd0b45";
+  const user = useLocalStorage("user");
+  const fonctionnaireID = user?._id;
+  const institutionID = user?.institution._id;
 
   let url = "";
   serviceID !== undefined

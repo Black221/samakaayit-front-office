@@ -1,20 +1,18 @@
 import profilebg from '../../assets/profilebg.png'
 import sms from '../../assets/sms.svg'
 import location from '../../assets/location.svg'
+import { useLocalStorage } from '../../hooks/useLocalStorage';
+import { formatDate } from '../../utils';
 
-const UserData = {
-  firstName: "Rachelle",
-  lastName: "Ndour",
-  email: "ndourrachelle@css.sn",
-  birthday: "1999-05-03",
-  phone: "06 00 00 00 00",
-  address: "Zac Mbao, Dakar",
-  post: "Responsable IT",
-  service: "Caisse de sécurité sociale",
-  superior: "Abdoulaye Dabo",
-}
+
+
+
 
 function Profil() {
+  const user = useLocalStorage('user');
+  console.log(user);
+
+
   return (
     <div>
       <section className='shadow-md rounded-[12px] mb-12'>
@@ -25,13 +23,13 @@ function Profil() {
           </div>
           <div className='pt-8'>
             <div className='flex items-center mb-4'>
-              <h1 className='text-xl font-bold mr-[24px] text-[#404040]'>Rachelle Ndour</h1>
+              <h1 className='text-xl font-bold mr-[24px] text-[#404040]'>{user?.name + " " + user?.surname}</h1>
               <p className='inline-block font-bold text-[#00AF41] bg-[#DAF9D8] rounded-md px-4 py-1 text-[12px]'>
                 <span className='mr-[15px]'>En service</span>
                 <span className='inline-block h-2 w-2 rounded-full bg-[#00AF41]'></span>
               </p>
             </div>
-            <p className='text-[#7B7C7E] mb-4 font-semibold'>Responsable IT Caisse de Sécurité Sociale</p>
+            <p className='text-[#7B7C7E] mb-4 font-semibold'>{user?.job}</p>
             <div className='flex flex-col items-start'>
               <div className='flex items-center mb-2'>
                 <img src={location} alt="location" className='w-[20px] h-[20px] mr-2' />
@@ -39,7 +37,7 @@ function Profil() {
               </div>
               <div className='flex items-center'>
                 <img src={sms} alt="sms" className='w-[20px] h-[20px] mr-2' />
-                <span className='font-semibold'>ndourrachelle@css.sn</span>
+                <span className='font-semibold'>{user?.email}</span>
               </div>
             </div>
           </div>
@@ -60,23 +58,23 @@ function Profil() {
               <form className='grid lg:grid-cols-2 grid-cols-1 gap-x-[36px] gap-y-3'>
                 <div className='min-w-[239px]'>
                   <label htmlFor="firstName" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Prénom et nom</label>
-                  <input type="text" id="firstName" value={UserData.firstName + "  " + UserData.lastName} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
+                  <input type="text" id="firstName" value={user?.name + " " + user?.surname} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
                 </div>
                 <div className='min-w-[239px]'>
                   <label htmlFor="email" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Email personnel</label>
-                  <input type="email" id="email" value={UserData.email} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
+                  <input type="email" id="email" value={user?.email} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
                 </div>
                 <div className='min-w-[239px]'>
                   <label htmlFor="birthday" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Date de naissance</label>
-                  <input type="date" id="birthday" value={UserData.birthday} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
+                  <input type="date" id="birthday" value={formatDate(user?.birthDate)} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
                 </div>
                 <div className='min-w-[239px]'>
                   <label htmlFor="phone" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Téléphone</label>
-                  <input type="tel" id="phone" value={UserData.phone} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
+                  <input type="tel" id="phone" value={user?.phoneNumber} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
                 </div>
                 <div className='min-w-[239px]'>
                   <label htmlFor="address" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Adresse</label>
-                  <input type="text" id="address" value={UserData.address} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
+                  <input type="text" id="address" value={user?.job} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
                 </div>
               </form>
             </div>
@@ -85,15 +83,15 @@ function Profil() {
               <form className='grid grid-cols-1 gap-y-3'>
                 <div className='min-w-[239px]'>
                   <label htmlFor="post" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Poste actuel</label>
-                  <input type="text" id="post" value={UserData.post} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
+                  <input type="text" id="post" value={user?.job} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
                 </div>
                 <div className='min-w-[239px]'>
                   <label htmlFor="service" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Service</label>
-                  <input type="text" id="service" value={UserData.service} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
+                  <input type="text" id="service" value={user?.job} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
                 </div>
                 <div className='min-w-[239px]'>
                   <label htmlFor="superior" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Superieur hierarchique</label>
-                  <input type="text" id="superior" value={UserData.superior} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
+                  <input type="text" id="superior" value={user?.job} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
                 </div>
               </form>
             </div>
