@@ -42,6 +42,7 @@ export default function Details() {
 
       {/* Display the details of the demand */}
       <DetailDemande demande={request} />
+      
     </div>
   );
 }

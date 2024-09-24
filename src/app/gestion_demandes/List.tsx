@@ -1,11 +1,13 @@
 import { useParams } from "react-router-dom";
 import ListDemande from "../../components/demandes/ListDemande";
-// import useFetchAllRequests from "../../hooks/useFetchAllResquests";
 import { useMainState } from "../../hooks/useMainState";
 import emptyfolder from "../../assets/empty-folder.svg";
 import useFetchAllRequests from "../../hooks/useFetchAllResquests";
 import { BASE_URL } from "../../constants";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
+
+
+// const showDetailsModal = (id: string) => {
 
 const Skeleton = () => {
   return (

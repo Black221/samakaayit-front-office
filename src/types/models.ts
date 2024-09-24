@@ -39,7 +39,7 @@ export type Demande = {
   documentsByAgent: string[] | undefined;
   processedBy: string[] | undefined;
   institution: Institution | undefined;
-  documentResponses: DocumentResponses | undefined;
+  documentResponses: DocumentResponses[] | undefined;
   __v: number | undefined;
   dateAndHourTreatment: string | undefined;
   commentByAgent: string | undefined;
@@ -61,6 +61,9 @@ export type Citoyen = {
   mothersSurname: string | undefined;
   maritalStatus: string | undefined;
   address: string | undefined;
+  nationality: string | undefined;
+  country: string | undefined;
+  city: string | undefined;
   __v: number | undefined;
 };
 
@@ -95,8 +98,12 @@ export type Field = {
 };
 
 export type DocumentResponses = {
-  "Copie de la Carte d'Identité": string | undefined;
+  name: string | undefined;
+  id: string | undefined;
 };
+
+// export type DocumentResponses = Record <string, string>
+
 
 export type MessageModel = {
   imageURL: string;

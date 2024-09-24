@@ -79,13 +79,13 @@ const getTimeFromDate = (date: string | undefined) => {
  * @param isoDate - The date string to format
  * @returns The formatted date string in the format 'YYYY-MM-DD'
  */
-const formatDate = (isoDate: string | undefined) => {
+const formatDate = (isoDate: string | undefined, separator: string = '-') => {
   if (!isoDate) return '';
   const date = new Date(isoDate);
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+  return `${year}${separator}${month}${separator}${day}`;
 }
 
 export {
