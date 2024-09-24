@@ -1,4 +1,4 @@
-import Chart from "react-apexcharts";
+// import Chart from "react-apexcharts";
 import RVList from "../../components/rendez_vous/RVList";
 import ListDemande from "../../components/demandes/ListDemande";
 import MessageList from "../../components/messagerie/MessageList";
@@ -34,7 +34,7 @@ const Messages = [
 ];
 
 const Dashboard = () => {
-  let url = `${BASE_URL}/requests`;
+  const url = `${BASE_URL}/requests`;
 
   const getRendezVous = async () => {
     const response = await axios.get(`${BASE_URL}/rendezvous`);
@@ -58,7 +58,6 @@ const Dashboard = () => {
 
   const {
     data: requestsByService,
-    isLoading: isLoadingOnFetchingRequestsByServices,
   } = useQuery({
     queryKey: ["requestsByService"],
     queryFn: getRequestsByService,
