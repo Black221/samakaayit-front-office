@@ -7,15 +7,12 @@ import logo2 from "../assets/logo.svg";
 import padlock from "../assets/padlock.png";
 import eye from "../assets/eye.svg";
 import eye2 from "../assets/eye-slash.svg";
-import idcard from "../assets/id-card.png";
 import { Toaster, toast } from 'sonner'
-// import Joi from "joi";
 import { schemas } from "../utils/validation-shemas";
 import axios from "axios";
 import { BASE_URL } from "../constants";
 
 interface IputProps {
-    label: string;
     type: string;
     onChange: any;
     id: string;
@@ -24,15 +21,18 @@ interface IputProps {
     rightButton?: React.ReactElement
 }
 
-function Input({id, label, type="text", onChange, placeholder, leftImage, rightButton} : Readonly<IputProps>) {
+function Input({id, type="text", onChange, placeholder, leftImage, rightButton} : Readonly<IputProps>) {
     return (
-        <div className="border-b-2 border-[#7B7C7E]">
-            <label htmlFor={id} className="block text-base font-medium text-black mb-2">{label} </label>
-            <div className="relative flex items-center mb-1">
-                {leftImage}
-                <input className="w-full px-8 outline-none text-lg bg-white" type={type} id={id} onChange={onChange} placeholder={placeholder}  autoComplete="off" required/>
-                {rightButton}
-            </div>
+        <div className="relative">
+            <span className="absolute inset-y-0 left-0 flex items-center pl-4">{leftImage}</span>
+            <input className="w-full px-12 placeholder-gray-300 outline-none text-lg bg-white h-[60px] border focus:border-primary-700 rounded-[32px] focus:outline-none focus:ring focus:ring-primary-500 focus:ring-opacity-40 transition-colors duration-300 ease-in-out font-medium"
+                type={type} id={id}
+                onChange={onChange}
+                placeholder={placeholder}
+                autoComplete="off"
+                required
+            />
+            <span className="absolute inset-y-0 right-0 flex items-center pr-4">{rightButton}</span>
         </div>
     );
 }
@@ -41,16 +41,13 @@ function Input({id, label, type="text", onChange, placeholder, leftImage, rightB
 
 export default function Login() {
 
-    // const [message, setMessage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
-    const [cni, setCni] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [type, setType] = useState('password');
-
     const { login } = useAuth();
     const navigate = useNavigate();
-
+    const url = `${BASE_URL}/fonctionnaires/auth/login`;
     const handleToggle = () => type === 'password' ? setType('text') : setType('password');
 
     const onSubmit = async (e: any) => {
@@ -62,22 +59,14 @@ export default function Login() {
                 password
             };
             const { value, error } = schemas.loginSchema.validate(body);
-            if (error) throw new Error("Veuillez remplir correctement les champs!");
-            const url = `${BASE_URL}/fonctionnaires/auth/login`;
+            if (error) throw new Error();
             const response = await axios.post(url, value);
-            const user =  await response.data;
-            if (user) {
-                login({...user.result.fonctionnaire});
-                setLoading(false);
-                navigate("/");
-            } else {
-                toast.error("CNI ou mot de passe incorrect!");
-                setLoading(false);
-            }
+            const user =  response.data;
+            login({...user.result.fonctionnaire});
+            navigate("/");
 
         } catch (error:any) {
-            // toast.error(error.message);
-            toast.error("Erreur! Veuillez vérifier les informations saisies.");
+            toast.error("Email ou mot de passe incorrect!");
         } finally {
             setLoading(false);
         }
@@ -101,24 +90,20 @@ export default function Login() {
                 <form className="w-[429px] mx-auto mt-[112px] flex flex-col" onSubmit={onSubmit} >
                     <h1 className="font-heading text-center text-black font-semibold text-[36px]/[45px] "> Connexion </h1>
                     <div className="mt-[117px]">
-                       <div className="flex flex-col gap-8">
+                        <div className="flex flex-col gap-8">
                             <Input
-                                // label="Numéro de la carte d'indentité"
-                                label="Email"
                                 type="email" placeholder="Email"
                                 onChange={(e:any) => setEmail(e.target.value)} id="Email"
-                                leftImage={<img src={idcard} alt="padlock"className="h-[16px] w-[16px] absolute left-0" />}
+                                leftImage={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>}
                             />
-    
                             <Input
-                                label="Mot de passe"
                                 type={type}
                                 placeholder="Mot de passe"
                                 onChange={(e:any) => setPassword(e.target.value)} id="password"
-                                leftImage={<img src={padlock} alt="padlock" className="h-[16px] w-[16px] absolute left-0" />}
-                                rightButton={<button type="button" onClick={handleToggle} className="absolute right-0"><img src={type === "password" ? eye : eye2} alt="eye" className="h-[20px] w-[20px]"/></button>}
+                                leftImage={<img src={padlock} alt="padlock" className="h-[20px] w-[20px]" />}
+                                rightButton={<button type="button" onClick={handleToggle}><img src={type === "password" ? eye : eye2} alt="eye" className="h-[20px] w-[20px]"/></button>}
                             />
-                       </div>
+                        </div>
 
                         <Button className={`w-full text-lg mt-[77px] font-bold rounded-[32px] h-[60px] ${loading ? "bg-primary-200 pointer-events-none" : "bg-primary-700"}`} label={
                             loading ? (
@@ -137,25 +122,3 @@ export default function Login() {
 }
 
 
-
-
-const USERS_TEST = [
-    {
-        id: "1",
-        cni: "108819901010",
-        password: "admin",
-        role: "admin"
-    },
-    {
-        id: "2",
-        cni: "108819901011",
-        password: "user",
-        role: "user"
-    },
-     {
-        id: "2",
-        cni: "0000",
-        password: "test",
-        role: "user"
-    }
-]

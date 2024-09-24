@@ -4,11 +4,11 @@ import ListDemande from "../../components/demandes/ListDemande";
 import MessageList from "../../components/messagerie/MessageList";
 import LoggedInUserImage from "../../assets/userImage.png";
 import { Demande } from "../../types/models";
-import Spinner from "../../components/Spinner";
 import useFetchAllRequests from "../../hooks/useFetchAllResquests";
 import { BASE_URL } from "../../constants";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Messages = [
   {
@@ -34,6 +34,7 @@ const Messages = [
 ];
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const url = `${BASE_URL}/requests`;
 
   const getRendezVous = async () => {
@@ -58,7 +59,7 @@ const Dashboard = () => {
       requests?.length) *
     100;
   return (
-    <div className="grid grid-cols-12 gap-6">
+    <div className="grid grid-cols-12 gap-6 pb-12">
       {/* Colonne principale (gauche) */}
       <div className="col-span-8 space-y-6">
         <div className="grid grid-cols-2 gap-6">
@@ -68,14 +69,7 @@ const Dashboard = () => {
             </h3>
             <div className="flex items-center space-x-2">
               <span className="text-ns font-medium">
-                {isLoadingOnFetchingRequestsList ? (
-                  <span className="h-full min-h-[300px] w-full flex justify-center items-center">
-                    {" "}
-                    <Spinner />{" "}
-                  </span>
-                ) : (
-                  requests?.length
-                )}
+                {requests?.length}
               </span>
               <span className="text-secondary-500 text-sm bg-secondary-100 px-2 py-1 rounded">
                 ↑ 1.2%
@@ -139,7 +133,15 @@ const Dashboard = () => {
               Total de {requests?.length} demandes
             </p>
             <div className="space-y-4">
-              <ListDemande demandes={requests} />
+              <ListDemande demandes={requests} itemCount={3} />
+              {requests.length > 3 && (
+                <button
+                  onClick={() => navigate("/demandes")}
+                  className="mt-4 text-sm text-primary-700 hover:underline"
+                >
+                  Voir tout
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -163,14 +165,7 @@ const Dashboard = () => {
             Rendez-vous
           </h3>
           <div className="space-y-4">
-            {isLoadingOnFetchingRendezVous ? (
-              <span className="h-full min-h-[300px] w-full flex justify-center items-center">
-                {" "}
-                <Spinner />{" "}
-              </span>
-            ) : (
-              <RVList RVs={rendezVous} />
-            )}
+            {rendezVous && <RVList RVs={rendezVous} />}
           </div>
         </div>
       </div>

@@ -8,8 +8,10 @@ export type UserModel = {
   name: string;
   surname: string;
   birthDate: string;
+  address: string
   job: string;
   sex?: 'M' | 'F';
+  imageURL?: string;
   idNumber: string;
   institution: Institution;
 };

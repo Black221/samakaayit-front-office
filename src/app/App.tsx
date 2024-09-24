@@ -1,14 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import Layout from "./Layout";
 import Dashboard from "./dashboard/Page";
-
 import { useMainState } from "../hooks/useMainState";
 import { useEffect } from "react";
 import Demandes from "./gestion_demandes/Page";
 import Profil from "./profil/Page";
 import Messagerie from "./messagerie/Page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { RequestsProvider } from "../providers/RequestsProvider";
 
 function App() {
   const { setScreenSize, setLargeScreen } = useMainState();
@@ -29,7 +27,6 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <RequestsProvider>
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Dashboard />} />
@@ -39,7 +36,6 @@ function App() {
             <Route path="/parametres" element={<Profil />} />
           </Route>
         </Routes>
-      </RequestsProvider>
     </QueryClientProvider>
   );
 }
