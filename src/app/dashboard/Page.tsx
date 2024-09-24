@@ -1,4 +1,4 @@
-import Chart from "react-apexcharts";
+// import Chart from "react-apexcharts";
 import RVList from "../../components/rendez_vous/RVList";
 import ListDemande from "../../components/demandes/ListDemande";
 import MessageList from "../../components/messagerie/MessageList";
@@ -41,6 +41,13 @@ const Dashboard = () => {
     return response.data.data;
   };
 
+  const getRequestsByService = async () => {
+    const response = await axios.get(
+      `${BASE_URL}/requests/institution/66e03f39c99206104c170ff9/request-count`
+    );
+    return response.data.data;
+  };
+
   const { isLoadingOnFetchingRequestsList, requests } =
     useFetchAllRequests(url);
   const { data: rendezVous, isLoading: isLoadingOnFetchingRendezVous } =
@@ -48,6 +55,13 @@ const Dashboard = () => {
       queryKey: ["RendezVous"],
       queryFn: getRendezVous,
     });
+
+  const {
+    data: requestsByService,
+  } = useQuery({
+    queryKey: ["requestsByService"],
+    queryFn: getRequestsByService,
+  });
 
   const numberOfRequestProcessed = requests?.filter(
     (demande: Demande) => demande.state === "terminé"
@@ -57,6 +71,7 @@ const Dashboard = () => {
       .length /
       requests?.length) *
     100;
+  console.log(requestsByService);
   return (
     <div className="grid grid-cols-12 gap-6">
       {/* Colonne principale (gauche) */}
@@ -110,19 +125,27 @@ const Dashboard = () => {
             <div>
               <div className="relative h-40 w-40 mx-auto">
                 <div className="flex items-center justify-center h-full w-full rounded-full">
-                  <Chart
+                  {/* <Chart
                     options={{
                       legend: { show: false },
-                      labels: [
-                        "Certificat de mariage",
-                        "Certificat de naissance",
-                        "Certificat de décès",
-                      ],
+                      labels: requestsByService?.services?.map(
+                        (service: {
+                          serviceId: string;
+                          serviceName: string;
+                          requestCount: number;
+                        }) => service.serviceName
+                      ),
                     }}
-                    series={[44, 55, 41]}
+                    series={requestsByService?.services?.map(
+                      (service: {
+                        serviceId: string;
+                        serviceName: string;
+                        requestCount: number;
+                      }) => service.requestCount
+                    )}
                     type="donut"
                     width="250"
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
