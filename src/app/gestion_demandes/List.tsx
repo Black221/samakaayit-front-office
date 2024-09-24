@@ -76,7 +76,7 @@ export default function List() {
             status={activeStatus ? activeStatus : ""}
             demandes={requests}
           />
-          <div className="flex justify-end items-center">
+          {/* <div className="flex justify-end items-center">
             <a
               href="/demandes"
               className="flex items-center px-4 py-2 mx-1 text-gray-800 transition-colors duration-300 transform bg-white rounded-md hover:bg-gray-200"
@@ -111,7 +111,7 @@ export default function List() {
             >
               Suivant
             </a>
-          </div>
+          </div> */}
         </>
       )}
     </div>

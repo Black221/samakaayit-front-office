@@ -5,28 +5,50 @@ import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { formatDate } from '../../utils';
 
 
+const Avatar = ({imageURL} : {imageURL: string | undefined}) => {
+  return (
+    <div className="flex items-center rounded-full overflow-hidden">
+      {
+        imageURL ?
+        <img className=" object-cover h-[85px] w-[85px] rounded-full bg-[#DAF9D8]" src={imageURL} alt="Profile image"/>
+        :
+        (
+          <div className="overflow-hidden relative h-[85px] w-[85px] bg-primary-700 rounded-full flex items-center justify-center">
+              <svg className="absolute w-24 h-24 -bottom-4 text-[#DAF9D8]" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+          </div>
+        )
+      }
+    </div>
+  );
+};
 
+const TimelineItem = ({day, time} : {day: string, time: string}) => {
+  return (
+    <li className="mb-10 ms-6">
+      <div className='rounded-full border-[5px] border-[#00AF41] bg-[#EAFFF2] absolute w-5 h-5  -start-[11px] ring-0 ring-white '></div>
+      <h3 className="flex items-center justify-between mb-1 text-sm font-semibold text-gray-900 ">{day} <span className="text-sm font-medium me-2 px-2.5 py-0.5 rounded ms-3">{time}</span></h3>
+    </li>
+  );
+}
 
 
 function Profil() {
   const user = useLocalStorage('user');
-  console.log(user);
-
 
   return (
     <div>
       <section className='shadow-md rounded-[12px] mb-12'>
-        <img src={profilebg} alt="profile-bg image" className="w-full" />
+        <img src={profilebg} alt="profile-bg image" className="w-full h-28 bg-gray-50" />
         <div className='relative w-full h-full px-[42px] py-6'>
           <div className='absolute rounded-full overflow-hidden p-[2px] bg-white -top-10 left-[40px]'>
-            <img src={'https://placehold.co/300x300'} height={85} width={85} alt="profile image" className='h-[85px] w-[85px] rounded-full bg-slate-300' />
+            <Avatar imageURL={user?.imageURL} />
           </div>
           <div className='pt-8'>
             <div className='flex items-center mb-4'>
               <h1 className='text-xl font-bold mr-[24px] text-[#404040]'>{user?.name + " " + user?.surname}</h1>
-              <p className='inline-block font-bold text-[#00AF41] bg-[#DAF9D8] rounded-md px-4 py-1 text-[12px]'>
+              <p className='inline-block font-bold text-primary-700 bg-[#DAF9D8] rounded-md px-4 py-1 text-[12px]'>
                 <span className='mr-[15px]'>En service</span>
-                <span className='inline-block h-2 w-2 rounded-full bg-[#00AF41]'></span>
+                <span className='inline-block h-2 w-2 rounded-full bg-primary-700'></span>
               </p>
             </div>
             <p className='text-[#7B7C7E] mb-4 font-semibold'>{user?.job}</p>
@@ -50,54 +72,43 @@ function Profil() {
       </section>
 
       {/* User profile */}
-      <section className='flex flex-col xl:flex-row flex-nowrap'>
-        <div className='flex-1 mb-8 xl:mb-0 xl:mr-10'>
+      <section className='flex flex-col xl:flex-row flex-nowrap pb-12'>
+        <div className='flex-1 mb-8 xl:mb-0 xl:mr-10 shadow-md rounded-[12px] p-5'>
           <div className='flex flex-col xl:flex-row gap-[36px] flex-nowrap'>
             <div className='flex-1 mb-8 xl:mb-0'>
-              <h3 className='text-xl font-semibold mb-8'>Informations personnelles</h3>
+              <h3 className='text-xl font-semibold mb-8'>Informations</h3>
               <form className='grid lg:grid-cols-2 grid-cols-1 gap-x-[36px] gap-y-3'>
                 <div className='min-w-[239px]'>
                   <label htmlFor="firstName" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Prénom et nom</label>
-                  <input type="text" id="firstName" value={user?.name + " " + user?.surname} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
+                  <input type="text" id="firstName" value={user?.name + " " + user?.surname} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm font-medium' />
                 </div>
                 <div className='min-w-[239px]'>
                   <label htmlFor="email" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Email personnel</label>
-                  <input type="email" id="email" value={user?.email} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
+                  <input type="email" id="email" value={user?.email} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm font-medium' />
                 </div>
                 <div className='min-w-[239px]'>
                   <label htmlFor="birthday" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Date de naissance</label>
-                  <input type="date" id="birthday" value={formatDate(user?.birthDate)} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
+                  <input type="date" id="birthday" value={formatDate(user?.birthDate)} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm font-medium' />
                 </div>
                 <div className='min-w-[239px]'>
                   <label htmlFor="phone" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Téléphone</label>
-                  <input type="tel" id="phone" value={user?.phoneNumber} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
+                  <input type="tel" id="phone" value={user?.phoneNumber} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm font-medium' />
                 </div>
                 <div className='min-w-[239px]'>
                   <label htmlFor="address" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Adresse</label>
-                  <input type="text" id="address" value={user?.job} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
+                  <input type="text" id="address" value={user?.address ?? "Non renseigné"} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm font-medium' />
                 </div>
-              </form>
-            </div>
-            <div>
-              <h3 className='text-xl font-semibold mb-8'>Informations professionnelles</h3>
-              <form className='grid grid-cols-1 gap-y-3'>
                 <div className='min-w-[239px]'>
                   <label htmlFor="post" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Poste actuel</label>
-                  <input type="text" id="post" value={user?.job} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
+                  <input type="text" id="post" value={user?.job} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm font-medium' />
                 </div>
                 <div className='min-w-[239px]'>
-                  <label htmlFor="service" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Service</label>
-                  <input type="text" id="service" value={user?.job} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
-                </div>
-                <div className='min-w-[239px]'>
-                  <label htmlFor="superior" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Superieur hierarchique</label>
-                  <input type="text" id="superior" value={user?.job} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm' />
+                  <label htmlFor="service" className='inline-block mb-1 text-sm font-semibold text-[#6F6F71]'>Institution</label>
+                  <input type="text" id="service" value={user?.institution.name} readOnly={true} className='w-full border-[1px] rounded-xl border-[#7B7C7E] py-2 px-4 outline-none text-sm font-medium' />
                 </div>
               </form>
             </div>
           </div>
-          {/* Button */}
-          <button className='bg-[#D9D9D9] text-white font-bold rounded-3xl py-3 px-6 mt-8'>Enregistrer</button>
         </div>
 
         {/* Timeline */}
@@ -116,14 +127,6 @@ function Profil() {
   )
 }
 
-const TimelineItem = ({day, time} : {day: string, time: string}) => {
-  return (
-    <li className="mb-10 ms-6">
-      <div className='rounded-full border-[5px] border-[#00AF41] bg-[#EAFFF2] absolute w-5 h-5  -start-[11px] ring-0 ring-white '></div>
-      <h3 className="flex items-center justify-between mb-1 text-sm font-semibold text-gray-900 ">{day} <span className="text-sm font-medium me-2 px-2.5 py-0.5 rounded ms-3">{time}</span></h3>
-    </li>
-  );
-}
 
 
 export default Profil;
