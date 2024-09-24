@@ -43,7 +43,7 @@ export default function Login() {
 
     // const [message, setMessage] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
-    const [cni, setCni] = useState<string>("");
+    // const [cni, setCni] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [type, setType] = useState('password');
@@ -138,24 +138,3 @@ export default function Login() {
 
 
 
-
-const USERS_TEST = [
-    {
-        id: "1",
-        cni: "108819901010",
-        password: "admin",
-        role: "admin"
-    },
-    {
-        id: "2",
-        cni: "108819901011",
-        password: "user",
-        role: "user"
-    },
-     {
-        id: "2",
-        cni: "0000",
-        password: "test",
-        role: "user"
-    }
-]
