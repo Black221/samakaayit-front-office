@@ -1,4 +1,4 @@
 import React from "react";
-import { RequestsContext } from "../providers/RequestsProvider";
+import { RequestStatusContext } from "../providers/RequestStatusProvider";
 
-export const useRequests = () => React.useContext(RequestsContext);
+export const useRequests = () => React.useContext(RequestStatusContext);
