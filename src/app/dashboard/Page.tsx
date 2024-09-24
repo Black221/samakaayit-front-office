@@ -77,7 +77,7 @@ const Dashboard = () => {
     <div className="grid grid-cols-12 gap-6 pb-12">
       {/* Colonne principale (gauche) */}
       <div className="col-span-8 space-y-6">
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 gap-6">
           <div className="bg-white shadow-md rounded-3xl p-6">
             <h3 className="text-ss font-semibold mb-4 text-tertiary-1000 ">
               Nombre total de demandes
@@ -111,7 +111,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-
+{/* 
           <div className="bg-white shadow-md rounded-3xl p-6">
             <h3 className="text-ss font-semibold mb-4 text-tertiary-1000">
               Nombre total de demandes par service
@@ -119,7 +119,7 @@ const Dashboard = () => {
             <div>
               <div className="relative h-40 w-40 mx-auto">
                 <div className="flex items-center justify-center h-full w-full rounded-full">
-                  {/* <Chart
+                  <Chart
                     options={{
                       legend: { show: false },
                       labels: requestsByService?.services?.map(
@@ -139,11 +139,11 @@ const Dashboard = () => {
                     )}
                     type="donut"
                     width="250"
-                  /> */}
+                  />
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* Deuxième rangée : Gestion des demandes */}

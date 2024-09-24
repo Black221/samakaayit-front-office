@@ -7,6 +7,7 @@ import Demandes from "./gestion_demandes/Page";
 import Profil from "./profil/Page";
 import Messagerie from "./messagerie/Page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import PDFViewer from "../components/PDFViewer";
 
 function App() {
   const { setScreenSize, setLargeScreen } = useMainState();
@@ -28,6 +29,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
         <Routes>
+          <Route path="/pdf-viewer" element={<PDFViewer />} />
           <Route element={<Layout />}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/demandes/*" element={<Demandes />} />

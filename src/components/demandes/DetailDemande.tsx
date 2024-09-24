@@ -1,6 +1,7 @@
+import { BASE_URL } from "../../constants";
 import { Demande, DocumentResponses } from "../../types/models";
-import { PDFViewer } from "@react-pdf/renderer";
-import DocumentResponse from "./DocumentResponse";
+// import { PDFViewer } from "@react-pdf/renderer";
+// import DocumentResponse from "./DocumentResponse";
 import { formatDate } from "../../utils";
 
 interface DetailDemandeProps {
@@ -22,25 +23,25 @@ const DetailDemandeItem = ({
   );
 };
 
-const ListPieces = ({ pieces }: { pieces: DocumentResponses[] }) => {
-  if (!pieces || pieces instanceof Array === false) return null;
-  return (
-    <div className="flex flex-col gap-y-1 mb-4">
-      <p className="font-semibold mb-1">Liste des pièces</p>
-      <ul>
-        {pieces?.map((piece, index) => (
-          <li key={index} className="list-none mb-2">
-            {index + 1}. {piece.name}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+// const ListPieces = ({ pieces }: { pieces: DocumentResponses[] }) => {
+//   if (!pieces || pieces instanceof Array === false) return null;
+//   return (
+//     <div className="flex flex-col gap-y-1 mb-4">
+//       <p className="font-semibold mb-1">Liste des pièces</p>
+//       <ul>
+//         {pieces?.map((piece, index) => (
+//           <li key={index} className="list-none mb-2">
+//             {index + 1}. {piece.name}
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
 
 const DetailDemande = ({ demande }: DetailDemandeProps) => {
   return (
-    <div className="w-[659px]">
+    <div className="">
       <div className="flex justify-between items-start">
         <div className="mb-10">
           <h1 className="font-semibold text-ns mb-2">{`${demande?.citoyen?.name} ${demande?.citoyen?.surname}`}</h1>
@@ -133,9 +134,10 @@ const DetailDemande = ({ demande }: DetailDemandeProps) => {
         </div>
       </div>
 
-      <ListPieces pieces={demande?.documentResponses ?? []} />
+      {/* <ListPieces pieces={demande?.documentResponses?.["Copie de la Carte d'Identité"] ?? []} /> */}
 
-      <button
+      <a href={`${BASE_URL}/documents/file/${demande.documentResponses?.["Copie de la Carte d'Identité"]}`}
+        target="_blank"
         className="flex items-center border-[1px] border-[#7B7C7E] rounded-2xl px-4 py-4 w-[265px] hover:bg-primary-700 hover:text-white hover:border-primary-400 transition-all active:bg-primary-900 focus:ring-primary-700/50 duration-200 ease-in-out"
         type="button"
       >
@@ -156,14 +158,14 @@ const DetailDemande = ({ demande }: DetailDemandeProps) => {
           />
         </svg>
         <span className="font-semibold">Ouvrir le fichier</span>
-      </button>
-      {demande.state === "terminé" && (
+      </a>
+      {/* {demande.state === "terminé" && (
         <div className="mt-4 mb-4">
           <PDFViewer width={700} height={700}>
             <DocumentResponse />
           </PDFViewer>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

@@ -39,7 +39,7 @@ export type Demande = {
   documentsByAgent: string[] | undefined;
   processedBy: string[] | undefined;
   institution: Institution | undefined;
-  documentResponses: DocumentResponses[] | undefined;
+  documentResponses: DocumentResponses| undefined;
   __v: number | undefined;
   dateAndHourTreatment: string | undefined;
   commentByAgent: string | undefined;
@@ -76,7 +76,7 @@ export type Service = {
   processingTime: string | undefined;
   description: string | undefined;
   link: string | undefined;
-  institutions: Institution[] | undefined;
+  institutions: Institution[]| undefined;
   fields: Field[] | undefined;
   __v: number | undefined;
 };
@@ -98,8 +98,9 @@ export type Field = {
 };
 
 export type DocumentResponses = {
-  name: string | undefined;
-  id: string | undefined;
+  "Copie de la Carte d'Identité": string | undefined;
+  // name: string | undefined;
+  // id: string | undefined;
 };
 
 // export type DocumentResponses = Record <string, string>
