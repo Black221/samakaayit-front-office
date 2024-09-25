@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../../constants";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faIdCard, faPhone, faBirthdayCake, faBriefcase, faHome, faUser, faCalendarCheck, faHourglass, faFile, faExternalLinkAlt, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faIdCard, faPhone, faBirthdayCake, faBriefcase, faHome, faUser, faCalendarCheck, faHourglass, faFile, faExternalLinkAlt, faDownload, faFlag } from '@fortawesome/free-solid-svg-icons';
 
 export default function Details() {
   const { id } = useParams();
@@ -78,6 +78,13 @@ export default function Details() {
                   <strong>Date de naissance :</strong>
                 </p>
                 <span>{new Date(request.citoyen.birthday).toLocaleDateString()}</span>
+              </div>
+              <div className="flex items-center mb-2">
+                <p className="w-48">
+                  <FontAwesomeIcon icon={faFlag} className="mr-2" />
+                  <strong>Pay de Naissance :</strong>
+                </p>
+                <span>{request.citoyen.country ?? "Sénégal"}</span>
               </div>
               <div className="flex items-center mb-2">
                 <p className="w-48">
@@ -172,7 +179,7 @@ export default function Details() {
           </div>
         </div>
 
-        <hr className="my-8 h-[2px] bg-black" />
+        <hr className="my-8 h-[1px] bg-black" />
 
         <div className="my-4 rounded-lg overflow-hidden flex items-center gap-10">
           <a
