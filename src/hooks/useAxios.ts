@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { openDB, DBSchema, IDBPDatabase } from 'idb';
 import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { useCallback } from 'react';
 
 // Client interface 
 interface Client {
@@ -12,24 +13,24 @@ interface Client {
     post: (
         url: string,
         data: any,
-        config?: AxiosRequestConfig,
+        config?: AxiosRequestConfig<any>,
         options?: { retryConfig?: { retries: number; delay: number } }
     ) => Promise<void>;
     put: (
         url: string,
         data: any,
-        config?: AxiosRequestConfig,
+        config?: AxiosRequestConfig<any>,
         options?: { retryConfig?: { retries: number; delay: number } }
     ) => Promise<void>;
     patch: (
         url: string,
         data: any,
-        config?: AxiosRequestConfig,
+        config?: AxiosRequestConfig<any>,
         options?: { retryConfig?: { retries: number; delay: number } }
     ) => Promise<void>;
     delete: (
         url: string,
-        config?: AxiosRequestConfig,
+        config?: AxiosRequestConfig<any>,
         options?: { retryConfig?: { retries: number; delay: number } }
     ) => Promise<void>;
 }
@@ -72,7 +73,7 @@ const dbPromise = openDB<CacheDB>('cache-db', 1, {
 });
 
 const useAxios = (
-    axiosInstance: AxiosInstance | any,
+    axiosInstance: AxiosInstance,
     defaultRetryConfig: RetryConfig = { retries: 3, delay: 1000 }
 ): UseAxiosReturn => {
     const [response, setResponse] = useState<any>(null);
@@ -133,27 +134,31 @@ const useAxios = (
         await tx.done;
     };
 
-    const axiosFetch = async (
+    const axiosFetch = useCallback(async (
         configObj: {
             method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
             url: string;
-            requestConfig?: AxiosRequestConfig;
+            requestConfig?: AxiosRequestConfig<any>;
         },
-        { staleTime = 5000, retryConfig = defaultRetryConfig }: { staleTime?: number; retryConfig?: RetryConfig }
+        { staleTime = 30000, retryConfig = defaultRetryConfig }: { staleTime?: number; retryConfig?: RetryConfig }
     ) => {
         setLoading(true);
         setError('');
     
         const { method, url, requestConfig = {} } = configObj;
+
+        // encode url
+        const encodedUrl = (url);
+
     
         // Prevent duplicate requests by checking pending requests
         if (pendingRequests.has(url)) {
-            console.log(`Request for ${url} is already pending`);
+            console.log(`Request for ${encodedUrl} is already pending`);
             return;
         }
     
         // Add request to pending requests
-        setPendingRequests(prev => new Map(prev).set(url, true));
+        setPendingRequests(prev => new Map(prev).set(encodedUrl, true));
     
         const ctrl = new AbortController();
         setController(ctrl);
@@ -161,40 +166,57 @@ const useAxios = (
         // Check cache first (only for GET requests)
         if (method === 'GET') {
             console.log('Checking cache for data...');
-            const cachedData = await getCachedData(url);
+            const cachedData = await getCachedData(encodedUrl);
+            console.log(cachedData, isStale(cachedData, staleTime));
+
             if (cachedData && !isStale(cachedData, staleTime)) {
-                console.log('Returning cached data from IndexedDB');
+                console.log('Returning cached data...');
                 setResponse(cachedData.data);
                 setLoading(false);
+                // Remove encodedUrl from pending requests
                 setPendingRequests(prev => {
                     const updated = new Map(prev);
-                    updated.delete(url);
+                    updated.delete(encodedUrl);
                     return updated;
                 });
                 return;
             }
         }
-    
+
+        const sendRequest = async () => {
+            switch (method) {
+                case 'GET':
+                    return axiosInstance.get(encodedUrl, { ...requestConfig, signal: ctrl.signal });
+                case 'POST':
+                    return axiosInstance.post(encodedUrl, requestConfig.data, { ...requestConfig, signal: ctrl.signal});
+                case 'PUT':
+                    return axiosInstance.put(encodedUrl, requestConfig.data, { ...requestConfig, signal: ctrl.signal });
+                case 'PATCH':
+                    return axiosInstance.patch(encodedUrl, requestConfig.data, { ...requestConfig, signal: ctrl.signal });
+                case 'DELETE':
+                    return axiosInstance.delete(encodedUrl, { ...requestConfig, signal: ctrl.signal });
+                default:
+                    throw new Error('Invalid HTTP method');
+            }
+        }
+        
         // Function to fetch data (used in retry)
         const fetchData = async () => {
-            const res: AxiosResponse<any> = await axiosInstance[method.toLowerCase()](url, {
-                signal: ctrl.signal,
-                ...requestConfig,
-            });
+            const res: AxiosResponse<any> = await sendRequest();
     
             // Cache data only for GET requests
             if (method === 'GET') {
                 const dataToCache: CacheData = { data: res.data, timestamp: Date.now() };
-                await setCachedData(url, dataToCache);
+                await setCachedData(encodedUrl, dataToCache);
             }
     
             setResponse(res.data);
             retryCountRef.current = 0;
     
-            // Remove URL from pending requests
+            // Remove encodedUrl from pending requests
             setPendingRequests(prev => {
                 const updated = new Map(prev);
-                updated.delete(url);
+                updated.delete(encodedUrl);
                 return updated;
             });
         };
@@ -209,27 +231,35 @@ const useAxios = (
             // Ensure the pending request is cleared
             setPendingRequests(prev => {
                 const updated = new Map(prev);
-                updated.delete(url);
+                updated.delete(encodedUrl);
                 return updated;
             });
         }
-    };
+    }, [pendingRequests, axiosInstance, defaultRetryConfig]);
 
     // Client object with methods for all HTTP requests
     const client = {
-        get: (url: string, config: AxiosRequestConfig = {}, options: { staleTime?: number; retryConfig?: RetryConfig } = {}) => {
+        get: (url: string, config: AxiosRequestConfig<any> = {}, options: { staleTime?: number; retryConfig?: RetryConfig } = {}) => {
             return axiosFetch({ method: 'GET', url, requestConfig: config }, options);
         },
-        post: (url: string, data: any, config: AxiosRequestConfig = {}, options: { retryConfig?: RetryConfig } = {}) => {
+        post: (url: string, data: any, config: AxiosRequestConfig<any> = {}, options: { retryConfig?: RetryConfig } = {
+            retryConfig: { retries: 1, delay: 10000 }
+        }) => {
             return axiosFetch({ method: 'POST', url, requestConfig: { ...config, data } }, options);
         },
-        put: (url: string, data: any, config: AxiosRequestConfig = {}, options: { retryConfig?: RetryConfig } = {}) => {
+        put: (url: string, data: any, config: AxiosRequestConfig<any> = {}, options: { retryConfig?: RetryConfig } = {
+            retryConfig: { retries: 1, delay: 10000 }
+        }) => {
             return axiosFetch({ method: 'PUT', url, requestConfig: { ...config, data } }, options);
         },
-        patch: (url: string, data: any, config: AxiosRequestConfig = {}, options: { retryConfig?: RetryConfig } = {}) => {
+        patch: (url: string, data: any, config: AxiosRequestConfig<any> = {}, options: { retryConfig?: RetryConfig } = {
+            retryConfig: { retries: 1, delay: 10000 }
+        }) => {
             return axiosFetch({ method: 'PATCH', url, requestConfig: { ...config, data } }, options);
         },
-        delete: (url: string, config: AxiosRequestConfig = {}, options: { retryConfig?: RetryConfig } = {}) => {
+        delete: (url: string, config: AxiosRequestConfig<any> = {}, options: { retryConfig?: RetryConfig } = {
+            retryConfig: { retries: 1, delay: 10000 }
+        }) => {
             return axiosFetch({ method: 'DELETE', url, requestConfig: config }, options);
         }
     };

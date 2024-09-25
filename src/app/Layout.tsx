@@ -1,9 +1,29 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
+import { ModalContainer } from "@/components/ModalComponents";
+import { useModal } from "@/hooks/useModal";
 
 const Layout = () => {
-  return (
+  
+  const onCloseModal = (modalRef: any, e: any) => {
+      if (modalRef.current && !modalRef.current.contains(e.target)) {
+          closeModal();
+      }
+  }
+
+  const {
+      modalElement,
+      modalOpen,
+      closeModal,
+  } = useModal();
+
+
+  return (<>
+    <ModalContainer open={modalOpen} onClose={onCloseModal}>
+        {modalElement}
+    </ModalContainer>
+
     <div className="flex h-screen py-6 bg-white overflow-hidden">
       <div className="px-6 h-full">
         <Sidebar />
@@ -15,7 +35,7 @@ const Layout = () => {
         </main>
       </div>
     </div>
-  );
+  </>);
 };
 
 export default Layout;

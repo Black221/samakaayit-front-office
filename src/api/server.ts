@@ -1,9 +1,10 @@
+import { BASE_URL } from '@/constants';
 import axios, { AxiosInstance } from 'axios';
 
 // Create an Axios instance
 const serverInstance: AxiosInstance = axios.create({
     // user api
-    baseURL: 'https://jsonplaceholder.typicode.com',
+    baseURL: BASE_URL,
     timeout: 5000,
 });
 
