@@ -57,7 +57,6 @@ export default function Details_v2() {
   return (
     <>
       <div className="flex justify-between items-center mb-4">
-        {/* Back button */}
         <button
           className="h-8 px-4 text-sm text-indigo-100 transition-colors duration-150 bg-gray-700 rounded-lg focus:shadow-outline hover:bg-gray-800"
           type="button"
@@ -68,7 +67,6 @@ export default function Details_v2() {
           Retour
         </button>
 
-        {/* Conditional button group */}
         {requestResponse.data?.state === "en-cours" ? (
           <div className="flex space-x-2">
             <button
