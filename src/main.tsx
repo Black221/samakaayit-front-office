@@ -17,7 +17,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <MainProvider>
       <AuthProvider>
         <ModalProvider>
-
           <BrowserRouter>
             <Routes>
               <Route element={<IsAuth />}>

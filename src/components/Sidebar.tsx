@@ -51,7 +51,7 @@ const Sidebar = () => {
     || location.pathname === route;
 
   return (
-    <div className="flex flex-col h-full w-15 bg-primary-700 p-4  rounded-3xl">
+    <div className="flex flex-col h-full  bg-primary-700 p-4 px-2  rounded-3xl">
       <div className="flex justify-center mb-12">
         <img src={SamaKeuyitLogo} alt="Logo" className="w-7 h-8" />
       </div>
@@ -66,7 +66,7 @@ const Sidebar = () => {
                 : "text-white p-2 hover:bg-green-500 rounded-full relative"
             }
           >
-            {isActive(navigation.route) && <div className="text-xs absolute bg-white w-24 -left-1 h-full top-0 rounded-l-full">
+            {isActive(navigation.route) && <div className="text-xs absolute bg-white w-24 -left-0.5 h-full top-0 rounded-l-full">
               {/* <div className="w-1 h-1 bg-white rounded-full absolute -top-1 -left-1"></div> */}
 
             </div>}

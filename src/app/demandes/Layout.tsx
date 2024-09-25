@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import StatusTabs from "../../components/StatusTabs";
-import ServiceSelection from "../../components/ServiceSelection";
+import StatusTabs from "@/components/StatusTabs";
+import ServiceSelection from "@/components/ServiceSelection";
 
 const Layout = () => {
   return (

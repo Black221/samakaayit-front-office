@@ -1,7 +1,7 @@
 import { BASE_URL } from "../constants";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 // const Skeleton = () => {
@@ -20,6 +20,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 const ServiceSelection = () => {
   // const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const user = useLocalStorage('user');
+  console.log(user);
 
   const getAllServices = async () => {
     // const response = await axios.get(BASE_URL + "/services/byInstitution/66d374377bc1913f767e4458");
@@ -34,11 +35,21 @@ const ServiceSelection = () => {
 
   console.log("data", data);
 
+  const location = useLocation();
+
+  const isActive = (route: string) => location.pathname.includes(route) && route !== "/demandes"
+    || location.pathname === route;
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md w-75 h-full overscroll-auto">
+    <div className="bg-white p-6 rounded-xl shadow-md w-80 h-full overscroll-auto">
       <h2 className="text-lg font-semibold font-body">Services</h2>
       <ul className="space-y-4 mt-6">
+        <NavLink
+          to="/demandes"
+          className={ isActive("/demandes") ? "block bg-primary-700 text-white font-medium px-4 py-2 rounded-lg" : "block  text-gray-800 hover:bg-primary-50 hover:text-gray-900 font-medium px-4 py-2 rounded-lg"}
+        >
+          Tous les services
+        </NavLink>
         {
           data && data.map((service: any, index: number) => (
             <NavLink
