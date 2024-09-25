@@ -1,10 +1,11 @@
+import ListDemande from "@/components/demandes/ListDemande";
+import { BASE_URL } from "@/constants";
+import useFetchAllRequests from "@/hooks/useFetchAllResquests";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useMainState } from "@/hooks/useMainState";
 import { useParams } from "react-router-dom";
-import ListDemande from "../../components/demandes/ListDemande";
-import { useMainState } from "../../hooks/useMainState";
-import emptyfolder from "../../assets/empty-folder.svg";
-import useFetchAllRequests from "../../hooks/useFetchAllResquests";
-import { BASE_URL } from "../../constants";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
+import emptyfolder from "@/assets/empty-folder.svg";
+
 
 
 // const showDetailsModal = (id: string) => {

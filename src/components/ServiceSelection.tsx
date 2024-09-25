@@ -20,6 +20,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 const ServiceSelection = () => {
   // const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const user = useLocalStorage('user');
+  console.log(user);
 
   const getAllServices = async () => {
     // const response = await axios.get(BASE_URL + "/services/byInstitution/66d374377bc1913f767e4458");
