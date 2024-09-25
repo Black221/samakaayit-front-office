@@ -24,7 +24,7 @@ const StatusTabs = () => {
 
   return (<>
   <div className="flex justify-between items-center mb-2">
-    Total de 1250 demandes.
+    Liste des demandes
   </div>
     <div className="flex space-x-8  mb-6">
       {tabs.map((tab: any, index: number) => (
