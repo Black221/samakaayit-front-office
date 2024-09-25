@@ -65,6 +65,7 @@ export default function Details_v2 () {
     } = requestResponse.data?.documentResponses;
 
     const citoyen = requestResponse.data?.citoyen;
+    const institution = requestResponse.data?.institution;
 
     return (<>
 
@@ -121,6 +122,26 @@ export default function Details_v2 () {
                         </p>
                         <p className="text-xs text-white bg-primary-700 px-2 py-1 rounded-full">
                             {requestResponse.data?.state}
+                        </p>
+                    </div>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                    <p className="text- font-semibold">
+                        Institution
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-fit">
+                        <p className="text-sm">
+                           <span className="underline pl-4"> Nom :</span> {institution?.name}
+                        </p>
+                        <p className="text-sm">
+                            <span className="underline pl-4">Domaine :</span> {institution?.domain}
+                        </p>
+                        <p className="text-sm">
+                            <span className="underline pl-4">Département :</span> {institution?.department}
+                        </p>
+                        <p className="text-sm">
+                            <span className="underline pl-4">Adresse :</span> {institution?.locality}
                         </p>
                     </div>
                 </div>
