@@ -76,7 +76,7 @@ export default function Login() {
 
 
     return (
-        <div className="flex min-h-screen font-body">
+        <div className="flex h-screen font-body">
             {/* illustration */}
             <div className="w-1/2 p-4">
                 <div className="flex flex-col rounded-[22px] h-full bg-secondary-100 px-[80px]">

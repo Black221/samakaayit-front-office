@@ -36,16 +36,16 @@ const ServiceSelection = () => {
 
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md w-75 max-h-[700px]">
-      <h2 className="text-lg font-semibold mb-4 font-body">Services</h2>
-      <ul className="space-y-4">
+    <div className="bg-white p-6 rounded-xl shadow-md w-75 h-full overscroll-auto">
+      <h2 className="text-lg font-semibold font-body">Services</h2>
+      <ul className="space-y-4 mt-6">
         {
           data && data.map((service: any, index: number) => (
             <NavLink
               key={index}
               // onClick={() => setActiveIndex(index)}
               to={"services/" + service._id}
-              className={({ isActive }) => isActive ? "block bg-primary-700 text-white font-medium px-4 py-2 rounded-lg" : "block bg-gray-100 text-gray-800 hover:bg-primary-50 hover:text-gray-900 font-medium px-4 py-2 rounded-lg"}>
+              className={({ isActive }) => isActive ? "block bg-primary-700 text-white font-medium px-4 py-2 rounded-lg" : "block  text-gray-800 hover:bg-primary-50 hover:text-gray-900 font-medium px-4 py-2 rounded-lg"}>
               {service.name}
             </NavLink>
           ))

@@ -33,7 +33,7 @@ export default function List() {
   const { serviceID } = useParams();
   const user = useLocalStorage("user");
   const fonctionnaireID = user?._id;
-  const institutionID = user?.institution._id;
+  const institutionID = user?.institution?._id;
 
   let url = "";
   serviceID !== undefined

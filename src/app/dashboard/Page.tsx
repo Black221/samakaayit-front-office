@@ -74,7 +74,7 @@ const Dashboard = () => {
     100;
   console.log(requestsByService);
   return (
-    <div className="grid grid-cols-12 gap-6 pb-12">
+    <div className="grid grid-cols-12 gap-6 pb-12 h-full">
       {/* Colonne principale (gauche) */}
       <div className="col-span-8 space-y-6">
         <div className="grid grid-cols-1 gap-6">
@@ -111,39 +111,6 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-{/* 
-          <div className="bg-white shadow-md rounded-3xl p-6">
-            <h3 className="text-ss font-semibold mb-4 text-tertiary-1000">
-              Nombre total de demandes par service
-            </h3>
-            <div>
-              <div className="relative h-40 w-40 mx-auto">
-                <div className="flex items-center justify-center h-full w-full rounded-full">
-                  <Chart
-                    options={{
-                      legend: { show: false },
-                      labels: requestsByService?.services?.map(
-                        (service: {
-                          serviceId: string;
-                          serviceName: string;
-                          requestCount: number;
-                        }) => service.serviceName
-                      ),
-                    }}
-                    series={requestsByService?.services?.map(
-                      (service: {
-                        serviceId: string;
-                        serviceName: string;
-                        requestCount: number;
-                      }) => service.requestCount
-                    )}
-                    type="donut"
-                    width="250"
-                  />
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
 
         {/* Deuxième rangée : Gestion des demandes */}
@@ -152,7 +119,7 @@ const Dashboard = () => {
             Gestion des demandes
           </h3>
           <div>
-            <p className="text-sm mb-4 text-primary-700 ">
+            <p className="text-sm text-primary-700 ">
               Total de {requests?.length} demandes
             </p>
             <div className="space-y-4">

@@ -23,10 +23,10 @@ const DemandeItem = ({ demande, onClick }: DemandeItemProps) => {
       <img src={idCard} alt="id-card" className="w-6 h-6 mr-[16px]" />
 
       <div className="flex flex-col items-start">
-        <h3 className="text-sm font-bold">
+        <h3 className="text-sm font-semibold">
           {demande?.citoyen?.name} {demande?.citoyen?.surname}
         </h3>
-        <p className="text-xs font-bold">
+        <p className="text-xs font-semibold text-[#7B7C7E]">
           Date de dépot :{" "}
           {getDateOfTypeStringInFrench(demande?.dateAndHourTreatment)}
         </p>

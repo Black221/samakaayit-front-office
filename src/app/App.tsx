@@ -36,6 +36,7 @@ function App() {
             <Route path="/messagerie" element={<Messagerie />} />
             <Route path="/rendez-vous" element={<div>Rendez-vous</div>} />
             <Route path="/parametres" element={<Profil />} />
+            <Route path="/profil" element={<Profil />} />
           </Route>
         </Routes>
     </QueryClientProvider>

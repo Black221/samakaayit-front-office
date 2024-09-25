@@ -24,12 +24,15 @@ const Header = () => {
       case location.pathname === "/parametres":
         title = "Paramètres";
         break;
+      case location.pathname === "/profil":
+        title = "Profil";
+        break;
     }
     return title;
   };
 
   return (
-    <header className="flex justify-between items-center px-4 bg-transparent ">
+    <header className="flex justify-between items-center px-4 pb-2 bg-transparent ">
       <h1 className="text-subheading font-semibold font-jakarta">
         {HeaderTitle()}
       </h1>
