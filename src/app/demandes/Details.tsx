@@ -31,19 +31,19 @@ export default function Details() {
 
   return (
     <div className="py-6">
-      {/* <button
-        className="h-8 px-4 mb-4 text-sm text-white transition-colors duration-150 bg-primary-600 rounded-lg focus:shadow-outline hover:bg-primary-500"
+      <button
+        className="h-8 px-4 mb-4 text-lg font-semibold text-white transition-colors duration-150 bg-primary-700 rounded-lg focus:shadow-outline hover:bg-primary-600"
         type="button"
         onClick={() => navigate(-1)}
       >
         Retour
-      </button> */}
+      </button>
 
       <div className="bg-white shadow-md rounded-lg p-6">
 
         <div className="mb-8">
           <h3 className="text-2xl font-bold mb-2 text-primary-700">{request.citoyen.name} {request.citoyen.surname}</h3>
-          <p className="text-xl text-gray-600">Numéro de dossier : {id}</p>
+          <p className="text-xl text-gray-600"><span className="font-bold">Numéro de dossier :</span> #{id}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -134,7 +134,26 @@ export default function Details() {
                   <FontAwesomeIcon icon={faHourglass} className="mr-2" />
                   <strong>État :</strong>
                 </p>
-                <span>{request.state}</span>
+                {
+                  request.state === "en-cours" && (
+                    <span className="text-primary-700 font-semibold">En cours</span>
+                  )
+                }
+                {
+                  request.state === "confirmé" && (
+                    <span className="text-primary-700 font-semibold">Confirmé</span>
+                  )
+                }
+                {
+                  request.state === "rejeté" && (
+                    <span className="text-primary-700 font-semibold">Rejeté</span>
+                  )
+                }
+                {
+                  request.state === "terminé" && (
+                    <span className="text-primary-700 font-semibold">Terminé</span>
+                  )
+                }
               </div>
               {/* <div className="flex items-center mb-2">
                 <p className="w-48">
@@ -153,7 +172,9 @@ export default function Details() {
           </div>
         </div>
 
-        <div className="mt-10 bg-slate-100 p-4 rounded-lg overflow-hidden flex items-center gap-10">
+        <hr className="my-8 h-[2px] bg-black" />
+
+        <div className="my-4 rounded-lg overflow-hidden flex items-center gap-10">
           <a
             href={`${BASE_URL}/documents/file/${request.documentResponses?.["Copie de la Carte d'Identité"]}`}
             target="_blank"
