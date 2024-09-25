@@ -4,18 +4,21 @@ import { Citoyen, Service, Institution } from "@/types/models";
 
 // Define the IRequest interface for type safety
 export interface IRequest {
-  _id?: string;
-  citoyen: Citoyen;
-  service: Service;
-  institution: Institution;
-  commentByCitoyen: string;
-  dateAndHourTreatment?: string;  // ISO date string
-  dateAndHour?: string;  // ISO date string
-  createdAt?: string; // ISO date string
-  textResponses: Record<string, string>;  // key-value pairs for responses
-  documentResponses: Record<string, string>;  // key-value pairs for documents
-  paymentMethods: string;
-  state?: string;
+    _id?: string;
+    citoyen: Citoyen;
+    service: Service;
+    institution: Institution;
+    commentByCitoyen: string;
+    commentByAgent?: string;
+    documentsByAgent?: string[];
+    dateAndHourTreatment?: string;  // ISO date string
+    dateAndHour?: string;  // ISO date string
+    createdAt?: string; // ISO date string
+    textResponses: Record<string, string>;  // key-value pairs for responses
+    documentResponses: Record<string, string>;  // key-value pairs for documents
+    paymentMethods: string;
+    state?: string;
+    processedBy?: string[];
 }
 
 // The useRequest hook to manage CRUD operations for requests

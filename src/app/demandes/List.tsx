@@ -76,7 +76,7 @@ export default function List() {
       ) : (
         <>
           <ListDemande
-            status={activeStatus ? activeStatus : ""}
+            status={activeStatus ? activeStatus.toLowerCase() : ""}
             demandes={requests}
           />
           {/* <div className="flex justify-end items-center">

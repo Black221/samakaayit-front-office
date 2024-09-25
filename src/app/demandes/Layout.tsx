@@ -8,7 +8,7 @@ const Layout = () => {
       <StatusTabs />
       <div className="flex flex-1 pb-1 h-full overflow-hidden">
         <ServiceSelection />
-        <div className="flex-1 px-6 overflow-auto">
+        <div className="flex-1 px-6 overflow-auto ">
           <Outlet />
         </div>
       </div>

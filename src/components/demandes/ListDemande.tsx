@@ -23,9 +23,9 @@ export default function ListDemande({
     <div>
        <ul className="py-6">
             {status ? (
-                demandes?.filter((demande) => demande.state === status).length > 0 ? (
+                demandes?.filter((demande) => demande.state.toLowerCase() === status).length > 0 ? (
                     demandes
-                        ?.filter((demande) => demande.state === status)
+                        ?.filter((demande) => demande.state.toLowerCase() === status)
                         .slice(0, limite) // Limite à limite
                         .map((demande) => (
                             <li

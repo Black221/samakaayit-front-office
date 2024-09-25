@@ -2,6 +2,9 @@
 import { useEffect } from "react";
 import { useRequest } from "./useRequest"
 import { useParams } from 'react-router-dom';
+import { useModal } from "../../hooks/useModal";
+import Modal from "./Reponse/Modal";
+import RefuseModal from "./Reponse/RefuseModal";
 
 
 export default function Details_v2 () {
@@ -19,10 +22,27 @@ export default function Details_v2 () {
         requestError
     } = useRequest();
 
+    
+    const {
+        openModal,
+        closeModal
+    } = useModal();
+
+
     useEffect(() => {
         fetchRequestById(id || "");
         return () => {};
     }, [id]);
+
+    const onResponse = () => {
+        openModal(
+            <Modal demande={requestResponse?.data} onClose={closeModal} />
+        );
+    }
+
+    const onRefuse = () => {
+        openModal(<RefuseModal onClose={closeModal} demande={requestResponse?.data} />);
+    }
 
     if (requestLoading) {
         return <div>Chargement...</div>
@@ -44,9 +64,25 @@ export default function Details_v2 () {
         [key: string]: string;
     } = requestResponse.data?.documentResponses;
 
+    const citoyen = requestResponse.data?.citoyen;
+
     return (<>
 
-        <div className="space-y-10 pt-4 ">
+            {
+                requestResponse.data?.state === "en-cours" ? (<>
+                    <div className="fixed right-14">
+                        <button onClick={onResponse} className="bg-primary-700 text-white px-4 py-2 rounded-md">
+                            Repondre
+                        </button>
+
+                        <button onClick={onRefuse} className="bg-white border-red-600 border text-red-700 px-4 py-2 rounded-md ml-2">
+                            Refuser
+                        </button>
+                    </div>
+                </>) : <></>
+            }
+
+        <div className="space-y-10 ">
 
             <div className="space-y-2">
                 <h1 className="text-xl font-bold">
@@ -75,7 +111,7 @@ export default function Details_v2 () {
                             Date de la demande :
                         </p>
                         <p className="text-xs text-white bg-primary-700 px-2 py-1 rounded-full">
-                            {requestResponse.data?.date}
+                            {requestResponse.data?.createdAt}
                         </p>
                     </div>
 
@@ -87,6 +123,108 @@ export default function Details_v2 () {
                             {requestResponse.data?.state}
                         </p>
                     </div>
+                </div>
+
+                <div className="space-y-4">
+                    <h2 className="text-lg font-bold">
+                        Informations du citoyen
+                    </h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm font-semibold">
+                                Nom
+                            </p>
+                            <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
+                                {citoyen?.name}
+                            </p>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm font-semibold">
+                                Prénom
+                            </p>
+                            <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
+                                {citoyen?.surname}
+                            </p>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm font-semibold">
+                                Sexe
+                            </p>
+                            <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
+                                {citoyen?.sex}
+                            </p>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm font-semibold">
+                                Téléphone
+                            </p>
+                            <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
+                                {citoyen?.phoneNumber}
+                            </p>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm font-semibold">
+                                Profession
+                            </p>
+                            <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
+                                {citoyen?.job}
+                            </p>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm font-semibold">
+                                Adresse
+                            </p>
+                            <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
+                                {citoyen?.address}
+                            </p>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm font-semibold">
+                                CIN
+                            </p>
+                            <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
+                                {citoyen?.cin}
+                            </p>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm font-semibold">
+                                Date de naissance
+                            </p>
+                            <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
+                                {citoyen?.birthDate}
+                            </p>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm font-semibold">
+                                Pays de naissance
+                            </p>
+                            <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
+                                {citoyen?.birthCountry}
+                            </p>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm font-semibold">
+                                Ville de naissance
+                            </p>
+                            <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
+                                {citoyen?.birthCity}
+                            </p>
+                        </div>
+
+                    </div>
+                        
+                        
+
+
                 </div>
 
                 <div className="">
@@ -111,9 +249,9 @@ export default function Details_v2 () {
                 </div>
 
                 <div className="">
-                    <h2 className="text-lg font-bold">
+                    {doc && Object.keys(doc).length > 0 && <h2 className="text-lg font-bold">
                         Documents fournis
-                    </h2>
+                    </h2>}
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {doc && Object.keys(doc).map((key, index) => (

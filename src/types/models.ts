@@ -98,10 +98,20 @@ export type Field = {
 };
 
 export type DocumentResponses = {
-  "Copie de la Carte d'Identité": string | undefined;
-  // name: string | undefined;
-  // id: string | undefined;
+  [key: string]: any
 };
+
+export interface IDocument {
+  _id?: string;
+  originalname: string;
+  mimetype: string;
+  size: number;
+  buffer: any;
+  name: string;
+  path?: string;
+  date?: string;
+  uploadedBy: string;
+}
 
 // export type DocumentResponses = Record <string, string>
 

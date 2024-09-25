@@ -34,10 +34,10 @@ const DemandeItem = ({ demande, onClick }: DemandeItemProps) => {
       <div className="flex-1"></div>
       <span
         className={`rounded-[3px] px-3 text-black font-medium text-sm ${
-          STATUS_COLOR[demande?.state]
+          STATUS_COLOR[demande?.state?.toLowerCase()]
         }`}
       >
-        {demande?.state}
+        {demande?.state?.toLowerCase()}
       </span>
 
       {/* ckeckbox */}
