@@ -7,7 +7,7 @@ const Layout = () => {
     <div className="flex min-h-[calc(100vh-130px)]">
         <div className="bg-white p-4 rounded-xl shadow-md w-68 min-h-[calc(100vh-130px)]">
           <ul className="flex flex-col gap-2 min-h-[calc(100vh-130px)]">
-            <li className="flex items-center gap-x-2 bg-primary-100 rounded-md px-3 py-2 cursor-pointer">
+            <li className="flex items-center gap-x-2 bg-primary-100 rounded-md px-3 py-2 cursor-pointer" onClick={() => navigate("/parametres/notifications")}>
               <FontAwesomeIcon icon={faBell} className="mr-2" />
               <span className="font-semibold">Notifications</span>
             </li>
