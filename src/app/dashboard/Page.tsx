@@ -42,37 +42,22 @@ const Dashboard = () => {
     return response.data.data;
   };
 
-  const getRequestsByService = async () => {
-    const response = await axios.get(
-      `${BASE_URL}/requests/institution/66e03f39c99206104c170ff9/request-count`
-    );
-    return response.data.data;
-  };
-
-  const { requests } =
-    useFetchAllRequests(url);
-  const { data: rendezVous } =
-    useQuery({
-      queryKey: ["RendezVous"],
-      queryFn: getRendezVous,
-    });
-
-  const {
-    data: requestsByService,
-  } = useQuery({
-    queryKey: ["requestsByService"],
-    queryFn: getRequestsByService,
+  const { requests } = useFetchAllRequests(url);
+  const { data: rendezVous } = useQuery({
+    queryKey: ["RendezVous"],
+    queryFn: getRendezVous,
   });
 
   const numberOfRequestProcessed = requests?.filter(
     (demande: Demande) => demande.state === "terminé"
   ).length;
-  const percentageOfRequestProcessed =
+  const percentageOfRequestProcessed = Math.round(
     (requests?.filter((demande: Demande) => demande.state === "terminé")
       .length /
       requests?.length) *
-    100;
-  console.log(requestsByService);
+      100
+  );
+
   return (
     <div className="grid grid-cols-12 gap-6 pb-12 h-full">
       {/* Colonne principale (gauche) */}
@@ -83,9 +68,7 @@ const Dashboard = () => {
               Nombre total de demandes
             </h3>
             <div className="flex items-center space-x-2">
-              <span className="text-ns font-medium">
-                {requests?.length}
-              </span>
+              <span className="text-ns font-medium">{requests?.length}</span>
               <span className="text-secondary-500 text-sm bg-secondary-100 px-2 py-1 rounded">
                 ↑ 1.2%
               </span>
