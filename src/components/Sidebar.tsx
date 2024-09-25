@@ -22,10 +22,10 @@ const navigation = [
     route: "/messagerie",
     icon: messagerieIcon,
   },
-  {
-    route: "/rendez-vous",
-    icon: rvIcon,
-  },
+  // {
+  //   route: "/rendez-vous",
+  //   icon: rvIcon,
+  // },
   {
     route: "/parametres",
     icon: parametreIcon,
@@ -55,7 +55,7 @@ const Sidebar = () => {
           </NavLink>
         ))}
       </nav>
-      <div className="mt-8 flex justify-center">
+      <div className="mt-auto flex justify-center">
         <NavLink
           onClick={logout}
           to="/connexion"
@@ -64,13 +64,13 @@ const Sidebar = () => {
           <img src={logoutIcon} alt="logout icon" />
         </NavLink>
       </div>
-      <div className="mt-auto flex justify-center">
+      {/* <div className="mt-auto flex justify-center">
         <img
           src={LoggedInUserImage}
           alt="User Avatar"
           className="w-10 h-10 rounded-full border-2 border-transparent"
         />
-      </div>
+      </div> */}
     </div>
   );
 };

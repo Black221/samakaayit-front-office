@@ -1,8 +1,8 @@
-import { BASE_URL } from "../../constants";
-import { Demande, DocumentResponses } from "../../types/models";
+import { BASE_URL } from "@/constants";
+import { Demande} from "@/types/models";
+import { formatDate } from "@/utils";
 // import { PDFViewer } from "@react-pdf/renderer";
 // import DocumentResponse from "./DocumentResponse";
-import { formatDate } from "../../utils";
 
 interface DetailDemandeProps {
   demande: Demande;
@@ -157,7 +157,7 @@ const DetailDemande = ({ demande }: DetailDemandeProps) => {
             strokeLinejoin="round"
           />
         </svg>
-        <span className="font-semibold">Ouvrir le fichier</span>
+        <span className="font-semibold">Telecharger le fichier</span>
       </a>
       {/* {demande.state === "terminé" && (
         <div className="mt-4 mb-4">

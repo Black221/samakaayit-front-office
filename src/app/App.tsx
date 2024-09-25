@@ -3,7 +3,7 @@ import Layout from "./Layout";
 import Dashboard from "./dashboard/Page";
 import { useMainState } from "../hooks/useMainState";
 import { useEffect } from "react";
-import Demandes from "./gestion_demandes/Page";
+import Demandes from "./demandes/Page";
 import Profil from "./profil/Page";
 import Messagerie from "./messagerie/Page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
