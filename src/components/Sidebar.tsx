@@ -83,10 +83,11 @@ const Sidebar = () => {
         <NavLink
           onClick={logout}
           to="/connexion"
-          className="text-white p-2 hover:bg-green-500 rounded-full"
+          className="text-white p-2 hover:bg-green-500 rounded-full mb-2"
         >
           <img src={logoutIcon} alt="logout icon" />
         </NavLink>
+
       </div>
       <div className=" flex justify-center">
         <NavLink to="/profil" className="text-white p-2 hover:bg-green-500 rounded-full">
