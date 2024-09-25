@@ -1,8 +1,11 @@
-import { faBell, faL, faLock, faMessage, faShield, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faLock, faMessage, faShield, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const Layout = () => {
+
+  const navigate = useNavigate();
+  
   return (
     <div className="flex min-h-[calc(100vh-130px)]">
         <div className="bg-white p-4 rounded-xl shadow-md w-68 min-h-[calc(100vh-130px)]">
