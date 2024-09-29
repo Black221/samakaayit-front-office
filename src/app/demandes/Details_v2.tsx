@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useModal } from "../../hooks/useModal";
 import Modal from "./Reponse/Modal";
 import RefuseModal from "./Reponse/RefuseModal";
+import { normalizeString } from "@/utils";
 
 export default function Details_v2() {
   const navigate = useNavigate();
@@ -202,12 +203,14 @@ export default function Details_v2() {
                             </p>
                         </div>
 
+
+
                         <div className="flex flex-col gap-2">
                             <p className="text-sm font-semibold">
-                                CIN
+                                CNI
                             </p>
                             <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
-                                {citoyen?.cin}
+                                {citoyen?.CNI}
                             </p>
                         </div>
 
@@ -234,14 +237,55 @@ export default function Details_v2() {
                                 Ville de naissance
                             </p>
                             <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
-                                {citoyen?.birthCity}
+                                {citoyen?.birthDepartment}
                             </p>
                         </div>
 
-                    </div>
-                        
-                        
+                        <div className="flex flex-col gap-2 col-span-2">
+                            <p className="text-sm font-semibold">
+                                Situation matrimoniale
+                            </p>
+                            <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
+                                {citoyen?.maritalStatus}
+                            </p>
+                          </div>
 
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm font-semibold">
+                                Nom du père
+                            </p>
+                            <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
+                                {citoyen?.fathersName}
+                            </p>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm font-semibold">
+                                Nom de la mère
+                            </p>
+                            <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
+                                {citoyen?.mothersName}
+                            </p>
+                          </div>
+
+                          <div className="flex flex-col gap-2">
+                            <p className="text-sm font-semibold">
+                                Prénom du père
+                            </p>
+                            <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
+                                {citoyen?.fathersSurname}
+                            </p>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm font-semibold">
+                                Prénom de la mère
+                            </p>
+                            <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
+                                {citoyen?.mothersSurname}
+                            </p>
+                          </div>
+                    </div>
 
                 </div>
 
@@ -304,7 +348,7 @@ export default function Details_v2() {
                     </p>
                 </div>
 
-                {requestResponse.data?.state === "terminé" && <>
+                {normalizeString(requestResponse.data?.state) === normalizeString("terminé") && <>
                 
                     <div className="">
                         <p className="font-semibold">
@@ -322,7 +366,7 @@ export default function Details_v2() {
                             {requestResponse.data?.documentResponses && 
                             (requestResponse.data?.documentsByAgent.map((doc: any, index:number) => (
 
-                                <div key={index} className="flex flex-row gap-4 bg-primary-100 rounded-md w-fit p-4 py-2">
+                                <div key={index} className="flex flex-row gap-4 bg-primary-700 text-white rounded-md w-fit p-4 py-2 mt-2">
                                     <a 
                                         href={baseUrl + "/documents/file/" + doc}
                                         target="_blank" rel="noreferrer">
@@ -336,190 +380,6 @@ export default function Details_v2() {
             </div>
         </div>
 
-        <hr />
-
-        <div className="flex flex-col gap-6">
-          <div className="">
-            <h2 className="text-xl font-bold">Résumé de la demande</h2>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <div className=" flex gap-2">
-              <p className="text text-xs">Date de la demande :</p>
-              <p className="text-xs text-white bg-primary-700 px-2 py-1 rounded-full">
-                {requestResponse.data?.createdAt}
-              </p>
-            </div>
-
-            <div className=" flex gap-2 items-center">
-              <p className="text text-xs">Etat :</p>
-              <p className="text-xs text-white bg-primary-700 px-2 py-1 rounded-full">
-                {requestResponse.data?.state}
-              </p>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <h2 className="text-lg font-bold">Informations du citoyen</h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="flex flex-col gap-2">
-                <p className="text-sm font-semibold">Nom</p>
-                <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
-                  {citoyen?.name}
-                </p>
-              </div>
-              <div className="flex flex-col gap-2">
-                <p className="text-sm font-semibold">Prénom</p>
-                <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
-                  {citoyen?.surname}
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <p className="text-sm font-semibold">Sexe</p>
-                <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
-                  {citoyen?.sex}
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <p className="text-sm font-semibold">Téléphone</p>
-                <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
-                  {citoyen?.phoneNumber}
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <p className="text-sm font-semibold">Profession</p>
-                <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
-                  {citoyen?.job}
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <p className="text-sm font-semibold">Adresse</p>
-                <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
-                  {citoyen?.address}
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <p className="text-sm font-semibold">CIN</p>
-                <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
-                  {citoyen?.cin}
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <p className="text-sm font-semibold">Date de naissance</p>
-                <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
-                  {citoyen?.birthDate}
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <p className="text-sm font-semibold">Pays de naissance</p>
-                <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
-                  {citoyen?.birthCountry}
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <p className="text-sm font-semibold">Ville de naissance</p>
-                <p className="text-gray-500 p-4 py-2 text-sm w-72 border rounded-full block">
-                  {citoyen?.birthCity}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="">
-            <h2 className="text-lg font-bold">Informations fournies</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {info &&
-              Object.keys(info).map((key, index) => (
-                <div key={index} className="flex flex-col gap-2">
-                  <p className="text-sm font-semibold">{key}</p>
-                  <p className="text-sm ">
-                    <span className="text-gray-500 p-4 w-72 border rounded-full block">
-                      {info[key]}
-                    </span>
-                  </p>
-                </div>
-              ))}
-          </div>
-
-          <div className="">
-            {doc && Object.keys(doc).length > 0 && (
-              <h2 className="text-lg font-bold">Documents fournis</h2>
-            )}
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {doc &&
-                Object.keys(doc).map((key, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-row gap-4 bg-primary-700 text-white rounded-md w-fit p-4 py-2 mt-2"
-                  >
-                    <a
-                      href={baseUrl + "/documents/file/" + doc[key]}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {key}
-                    </a>
-                  </div>
-                ))}
-            </div>
-          </div>
-        </div>
-
-        <hr />
-
-        <div className="flex flex-col gap-4">
-          <div className="">
-            <h2 className="text-xl font-bold">Réponse à la demande</h2>
-          </div>
-
-          <div className="">
-            <p className="font-semibold">Etat</p>
-            <p>{requestResponse.data?.state}</p>
-          </div>
-
-          {requestResponse.data?.state === "terminé" && (
-            <>
-              <div className="">
-                <p className="font-semibold">Commentaire</p>
-                <p>{requestResponse.data?.commentByAgent}</p>
-              </div>
-              <div className="space-y-2">
-                <p className="font-semibold">Documents</p>
-                <div className="flex flex-col gap-4">
-                  {requestResponse.data?.documentResponses &&
-                    requestResponse.data?.documentsByAgent.map(
-                      (doc: any, index: number) => (
-                        <div
-                          key={index}
-                          className="flex flex-row gap-4 bg-primary-100 rounded-md w-fit p-4 py-2"
-                        >
-                          <a
-                            href={baseUrl + "/documents/file/" + doc}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            Télécharger
-                          </a>
-                        </div>
-                      )
-                    )}
-                </div>
-              </div>
-            </>
-          )}
-        </div>
       </div>
     </>
   );
